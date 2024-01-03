@@ -1,3 +1,43 @@
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+ZSH_THEME=""
+
+unsetopt BEEP
+
+plugins=(git zsh-fzf-history-search zsh-syntax-highlighting fzf-tab zsh-autosuggestions)
+
+source $ZSH/oh-my-zsh.sh
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='nvim'
+else
+  export EDITOR='nvim'
+fi
+
+ENV_VAULT=${HOME}/.env_vault
+
+function env_vault.load(){
+  echo "Loading env vault..."
+  source =(ansible-vault view ${ENV_VAULT})
+}
+
+function env_vault.edit(){
+  ansible-vault edit ${ENV_VAULT}
+}
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+export PATH=$PATH:/usr/local/go/bin
+
 #######################################################
 # CLI Pomodoro
 #######################################################
@@ -32,19 +72,10 @@ export HISTSIZE=500
 # Allow ctrl-S for history navigation (with ctrl-R)
 [[ $- == *i* ]] && stty -ixon
 
-# Set the default editor
-export EDITOR=nvim
-export VISUAL=nvim
-alias pico='edit'
-alias spico='sedit'
-alias nano='edit'
-alias snano='sedit'
 alias vim='nvim'
-alias cat='batcat'
+alias vi='nvim'
 
-#######################################################
-# MACHINE SPECIFIC ALIAS'S
-#######################################################
+alias cat='batcat'
 
 # Alias's for SSH
 # alias SERVERNAME='ssh YOURWEBSITE.com -l USERNAME -p PORTNUMBERHERE'
@@ -53,23 +84,11 @@ alias phanpy='ssh phanpy.logodata.intern -l admin'
 # Alias's to change the directory
 alias web='cd /var/www/html'
 
-#######################################################
-# GENERAL ALIAS'S
-#######################################################
 # To temporarily bypass an alias, we precede the command with a \
 
 # Alias's to modified commands
-alias rm='trash -v'
 alias mkdir='mkdir -p'
-alias ps='ps auxf'
 alias ping='ping -c 10'
-alias less='less -R'
-alias cls='clear'
-alias multitail='multitail --no-repeat -c'
-alias freshclam='sudo freshclam'
-alias vi='nvim'
-alias svi='sudo vi'
-alias vis='nvim "+set si"'
 
 # Change directory aliases
 alias home='cd ~'
@@ -79,50 +98,15 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
-# cd into the old directory
-alias bd='cd "$OLDPWD"'
-
 # Remove a directory and all files
 alias rmd='/bin/rm  --recursive --force --verbose '
 
 # Alias's for multiple directory listing commands
 alias ls='ls -lAFh --color=always' # add colors and file type extensions
-alias lx='ls -lXBh' # sort by extension
-alias lk='ls -lSrh' # sort by size
-alias lc='ls -lcrh' # sort by change time
-alias la='ls -lurh' # sort by access time
-alias lr='ls -lARh' # recursive ls
-alias lt='ls -ltrh' # sort by date
-alias lm='ls -Alh |more' # pipe through 'more'
-alias lw='ls -xAh' # wide listing format
-alias ll='ls -Fls' # long listing format
-alias labc='ls -lAp' #alphabetical sort
-alias lf="ls -l | egrep -v '^d'" # files only
-alias ldir="ls -l | egrep '^d'" # directories only
-
-# alias chmod commands
-alias mx='chmod a+x'
-alias 000='chmod -R 000'
-alias 644='chmod -R 644'
-alias 666='chmod -R 666'
-alias 755='chmod -R 755'
-alias 777='chmod -R 777'
-
-# Search command line history
-alias h="history | grep "
 
 # Search running processes
 alias p="ps aux | grep "
 alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
-
-# Search files in the current folder
-alias f="find . | grep "
-
-# Count all files (recursively) in the current folder
-alias countfiles="for t in files links directories; do echo \`find . -type \${t:0:1} | wc -l\` \$t; done 2> /dev/null"
-
-# To see if a command is aliased, a file, or a built-in command
-alias checkcommand="type -t"
 
 # Show open ports
 alias openports='netstat -nape --inet'
@@ -149,9 +133,6 @@ alias ungz='tar -xvzf'
 
 # Show all logs in /var/log
 alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' ' -f1 | sed -e's/:$//g' | grep -v '[0-9]$' | xargs tail -f"
-
-# SHA1
-alias sha1='openssl sha1'
 
 alias clickpaste='sleep 3; xdotool type "$(xclip -o -selection clipboard)"'
 
@@ -273,15 +254,6 @@ mysqlconfig ()
 		echo "Searching for possible locations:"
 		sudo updatedb && locate my.cnf
 	fi
-}
-
-# Trim leading and trailing spaces (for scripts)
-trim()
-{
-	local var=$*
-	var="${var#"${var%%[![:space:]]*}"}"  # remove leading whitespace characters
-	var="${var%"${var##*[![:space:]]}"}"  # remove trailing whitespace characters
-	echo -n "$var"
 }
 
 # Install Starship - curl -sS https://starship.rs/install.sh | sh
