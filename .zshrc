@@ -5,7 +5,8 @@ ZSH_THEME=""
 
 unsetopt BEEP
 
-plugins=(git zsh-fzf-history-search zsh-syntax-highlighting fzf-tab zsh-autosuggestions)
+# plugins=(git python starship fzf nmap tmux zsh-fzf-history-search zsh-syntax-highlighting fzf-tab zsh-autosuggestions)
+plugins=(git python starship fzf nmap tmux zsh-interactive-cd)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -256,6 +257,3 @@ mysqlconfig ()
 	fi
 }
 
-# Install Starship - curl -sS https://starship.rs/install.sh | sh
-
-eval "$(starship init zsh)"
