@@ -16,7 +16,7 @@ cd () {
 	fi
 }
 
-function whatsmyip () {
+function whatsmyip() {
 	# Dumps a list of all IP addresses for every device
 	# /sbin/ifconfig |grep -B1 "inet addr" |awk '{ if ( $1 == "inet" ) { print $2 } else if ( $2 == "Link" ) { printf "%s:" ,$1 } }' |awk -F: '{ print $1 ": " $3 }';
 	
@@ -28,8 +28,7 @@ function whatsmyip () {
 	#echo -n "External IP: " ; wget http://smart-ip.net/myip -O - -q
 	
 	# Internal IP Lookup.
-	if [ -e /sbin/ip ];
-	then
+	if [ -e /sbin/ip ]; then
 		echo -n "Internal IP: " ; /sbin/ip addr show wlan0 | grep "inet " | awk -F: '{print $1}' | awk '{print $2}'
 	else
 		echo -n "Internal IP: " ; /sbin/ifconfig wlan0 | grep "inet " | awk -F: '{print $1} |' | awk '{print $2}'
@@ -38,3 +37,14 @@ function whatsmyip () {
 	# External IP Lookup 
 	echo -n "External IP: " ; curl -s ifconfig.me
 }
+
+function learn_py() {
+  builtin cd ~/GitHub/python_collection/hundred-days/
+  if [ -e .venv ]; then
+    source .venv/bin/activate
+  else
+    python3 -m venv .venv
+    source .venv/bin/activate
+    python -m pip install -r requirements.txt
+  fi
+} 
