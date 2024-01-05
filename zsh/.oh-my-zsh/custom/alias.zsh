@@ -51,3 +51,5 @@ alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' 
 
 alias clickpaste='sleep 3; xdotool type "$(xclip -o -selection clipboard)"'
 
+alias update_req='pip freeze | cut -d"=" -f1 > ~/GitHub/python_collection/hundred-days/requirements.txt'
+
