@@ -1,8 +1,9 @@
 export ZSH="$HOME/.oh-my-zsh"
 export EDITOR="nvim"
 
-export ENV_VAULT=${HOME}/.env_vault
+export ENV_VAULT=$HOME/.env_vault
 export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:$HOME/.local/bin
 
 ZSH_THEME=""
 
