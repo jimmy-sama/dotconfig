@@ -1,9 +1,12 @@
 export ZSH="$HOME/.oh-my-zsh"
+export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST
 export EDITOR="nvim"
 
 export ENV_VAULT=$HOME/.env_vault
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/.cargo/bin
+
 
 ZSH_THEME=""
 
