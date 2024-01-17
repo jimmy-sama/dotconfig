@@ -1,0 +1,11 @@
+require('keymaps')
+require('options')
+require('plugins.lazy')
+require('plugins.misc')
+require('plugins.lualine')
+require('plugins.gitsigns')
+require('plugins.tele')
+require('plugins.treesitter')
+require('plugins.lsp')
+require('plugins.trouble')
+
