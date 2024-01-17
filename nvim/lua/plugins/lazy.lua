@@ -34,27 +34,7 @@ require('lazy').setup({
     opts = {
     },
   },
-  'folke/zen-mode.nvim',
-  'ThePrimeagen/git-worktree.nvim',
-  'xiyaowong/nvim-transparent',
-
-  {
-    "folke/trouble.nvim",
-    dependencies = "nvim-tree/nvim-web-devicons",
-    config = function()
-      require("trouble").setup {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-      }
-    end
-  },
-
   { "catppuccin/nvim", as = "catppuccin" },
-  {
-    "windwp/nvim-autopairs",
-      config = function() require("nvim-autopairs").setup {} end
-  },
 
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
@@ -83,13 +63,6 @@ require('lazy').setup({
     }
   },
 
-  -- Git related plugins
-  'tpope/vim-fugitive',
-  'lewis6991/gitsigns.nvim',
-
-  'nvim-lualine/lualine.nvim', -- Fancier statusline
-  'lukas-reineke/indent-blankline.nvim', -- Add indentation guides even on blank lines
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   -- Fuzzy Finder (files, lsp, etc)
   { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
   'nvim-telescope/telescope-symbols.nvim',
