@@ -54,7 +54,7 @@ checkEnv() {
 
 installDepend() {
     ## Check for dependencies.
-    DEPENDENCIES='autojump bash bash-completion tar neovim bat'
+    DEPENDENCIES='tar neovim bat'
     echo -e "${YELLOW}Installing dependencies...${RC}"
     if [[ $PACKAGER == "pacman" ]]; then
         if ! command_exists yay; then
@@ -82,30 +82,7 @@ installStarship(){
     fi
 }
 
-linkConfig() {
-    
-    for config in dotconfig/* ; do
-    OLD_CONFIG=~/.config/${config:10}
-    if [ -e "$OLD_CONFIG" ]; then
-        echo -e "${YELLOW} Moving old ${config:10} config files to ${Home}/.config/backup/"
-        mkdir -p ${HOME}/.config/backup
-        if ! mv ${OLD_CONFIG} ${HOME}/.config/backup/; then
-            echo -e "${RED}Can't move the old config files!${RC}"
-            exit 1
-        fi
-    fi
-    done
-    echo -e "${YELLOW}Linking new config files...${RC}"
-    for config in dotconfig/* ; do
-
-    done
-}
-
 checkEnv
 installDepend
 installStarship
-if linkConfig; then
-    echo -e "${GREEN}Done!\nrestart your shell to see the changes.${RC}"
-else
-    echo -e "${RED}Something went wrong!${RC}"
-fi
+
