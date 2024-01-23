@@ -67,7 +67,7 @@
 
 - name: Symlink home files
   file: 
-    src: ~/dotconfig/home/{{ item }}
+    src: ~/GitHub/dotconfig/home/{{ item }}
     dest: ~/{{ item }}
     state: link
     force: yes
@@ -77,7 +77,7 @@
 
 - name: Symlink config files
   file: 
-    src: ~/dotconfig/config/{{ item }}
+    src: ~/GitHub/dotconfig/config/{{ item }}
     dest: ~/.config/{{ item }}
     state: link
     force: yes
@@ -87,7 +87,7 @@
 
 - name: Symlink zsh files
   file: 
-    src: ~/dotconfig/zsh/{{ item }}
+    src: ~/GitHub/dotconfig/zsh/{{ item }}
     dest: ~/.oh-my-zsh/custom/{{ item }}
     state: link
     force: yes
