@@ -5,6 +5,8 @@ RED='\e[31m'
 YELLOW='\e[33m'
 GREEN='\e[32m'
 
+git pull
+
 command_exists () {
     command -v $1 >/dev/null 2>&1;
 }
@@ -52,37 +54,17 @@ checkEnv() {
     fi
 }
 
-installDepend() {
-    ## Check for dependencies.
-    DEPENDENCIES='tar neovim bat'
-    echo -e "${YELLOW}Installing dependencies...${RC}"
-    if [[ $PACKAGER == "pacman" ]]; then
-        if ! command_exists yay; then
-            echo "Installing yay..."
-            sudo ${PACKAGER} --noconfirm -S base-devel
-            $(cd /opt && sudo git clone https://aur.archlinux.org/yay-git.git && sudo chown -R ${USER}:${USER} ./yay-git && cd yay-git && makepkg --noconfirm -si)
-        else
-            echo "Command yay already installed"
-        fi
-    	yay --noconfirm -S ${DEPENDENCIES}
-    else 
-    	sudo ${PACKAGER} install -yq ${DEPENDENCIES}
-    fi
-}
-
-installStarship(){
-    if command_exists starship; then
-        echo "Starship already installed"
-        return
-    fi
-
-    if ! curl -sS https://starship.rs/install.sh|sh;then
-        echo -e "${RED}Something went wrong during starship install!${RC}"
+execPlaybook() {
+    DEPENDENCIES="ansible" 
+    sudo ${PACKAGER} install -a ${DEPENDENCIES}
+    if [[ `uname` == 'Linux' ]]; then
+        ansible-playbook -i inventory linux.yml
+    else
+        echo -e "${RED}Only Linux systems are supported at this time!${RC}"
         exit 1
     fi
 }
 
-checkEnv
-installDepend
-installStarship
 
+checkEnv
+execPlaybook

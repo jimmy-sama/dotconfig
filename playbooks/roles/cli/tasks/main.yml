@@ -1,0 +1,104 @@
+---
+- name: Update packages using APT
+  become: yes
+  become_method: sudo
+  apt: 
+    upgrade: dist 
+    update_cache: yes
+  when: ansible_os_family == 'Debian'
+
+- name: Update packages using DNF 
+  become: yes
+  become_method: sudo
+  dnf: 
+    upgrade: dist 
+    update_cache: yes
+  when: ansible_os_family == 'RedHat'
+
+- name: Install libraries using APT
+  apt: 
+    name: "{{ item }}" 
+    state: latest
+  become: yes
+  become_method: sudo
+  with_items:
+    - curl
+    - git
+    - htop
+    - nmap
+    - python3
+    - python3-pip
+    - vim
+    - tmux
+    - wget
+    - zsh
+  when: ansible_os_family == 'Debian'
+
+- name: Install libraries using DNF
+  dnf: 
+    name: "{{ item }}" 
+    state: latest
+  become: yes
+  become_method: sudo
+  with_items:
+    - curl
+    - git
+    - htop
+    - nmap
+    - python3
+    - python3-pip
+    - vim
+    - tmux
+    - wget
+    - zsh
+  when: ansible_os_family == 'RedHat'
+
+- name: Change shell to ZSH
+  become: yes
+  become_method: sudo
+  user: 
+    shell: /bin/zsh 
+    name: root
+
+- name: Install OMZ 
+  git: 
+    repo: https://github.com/ohmyzsh/ohmyzsh.git 
+    dest: ~/.oh-my-zsh
+
+- name: Symlink home files
+  file: 
+    src: ~/dotconfig/home/{{ item }}
+    dest: ~/{{ item }}
+    state: link
+    force: yes
+  with_items:
+    - .zshrc
+    - .tmux.conf
+
+- name: Symlink config files
+  file: 
+    src: ~/dotconfig/config/{{ item }}
+    dest: ~/.config/{{ item }}
+    state: link
+    force: yes
+  with_items:
+    - nvim
+    - yazi
+
+- name: Symlink zsh files
+  file: 
+    src: ~/dotconfig/zsh/{{ item }}
+    dest: ~/.oh-my-zsh/custom/{{ item }}
+    state: link
+    force: yes
+  with_items:
+    - alias.zsh 
+    - functions.zsh
+
+- name: Clone tmux plugins
+  git:
+    repo: https://github.com/tmux-plugins/tpm 
+    dest: ~/.tmux/plugins/tpm
+
+- name: Install/update tmux plugins
+  command: ~/.tmux/plugins/tpm/bin/update_plugins all
