@@ -7,14 +7,6 @@
     update_cache: yes
   when: ansible_os_family == 'Debian'
 
-- name: Update packages using DNF 
-  become: yes
-  become_method: sudo
-  dnf: 
-    upgrade: dist 
-    update_cache: yes
-  when: ansible_os_family == 'RedHat'
-
 - name: Install libraries using APT
   apt: 
     name: "{{ item }}" 
@@ -33,6 +25,14 @@
     - wget
     - zsh
   when: ansible_os_family == 'Debian'
+
+- name: Update packages using DNF 
+  become: yes
+  become_method: sudo
+  dnf: 
+    upgrade: dist 
+    update_cache: yes
+  when: ansible_os_family == 'RedHat'
 
 - name: Install libraries using DNF
   dnf: 
