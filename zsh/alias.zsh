@@ -18,6 +18,8 @@ alias rmd='/bin/rm  --recursive --force --verbose '
 
 # Alias's for directory listing commands
 alias ls='ls -lAFh --color=always' # add colors and file type extensions
+alias lt='lsd -lA --tree'
+alias ltc='lsd -lA --tree --classic'
 
 # Search running processes
 alias p="ps aux | grep "
