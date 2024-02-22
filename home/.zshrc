@@ -23,7 +23,6 @@ zstyle ':omz:update' frequency 10
 HIST_STAMPS="mm/dd/yyyy"
 
 # Some plugins need to be installed manually first!
-# git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions 
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 # git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
 
@@ -33,7 +32,6 @@ plugins=(
 	starship
 	fzf
 	history
-	zsh-autosuggestions
 	zsh-syntax-highlighting
 	zsh-history-substring-search
 )
