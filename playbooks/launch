@@ -56,7 +56,7 @@ checkEnv() {
 
 execPlaybook() {
     DEPENDENCIES="ansible" 
-    sudo ${PACKAGER} install -a ${DEPENDENCIES}
+    sudo ${PACKAGER} install -y ${DEPENDENCIES}
     if [[ `uname` == 'Linux' ]]; then
         ansible-playbook -i inventory linux.yml
     else
