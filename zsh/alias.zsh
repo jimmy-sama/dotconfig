@@ -3,7 +3,7 @@
 alias vim='nvim'
 alias vi='nvim'
 
-alias cat='batcat'
+alias cat='bat'
 
 # Alias's for SSH
 # alias SERVERNAME='ssh YOURWEBSITE.com -l USERNAME -p PORTNUMBERHERE'
