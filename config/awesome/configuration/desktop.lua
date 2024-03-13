@@ -60,22 +60,22 @@ bling.module.flash_focus.enable()
 
 --- Tag preview
 --- ~~~~~~~~~~~
-bling.widget.tag_preview.enable({
-	show_client_content = true,
-	scale = 0.20,
-	honor_workarea = true,
-	honor_padding = true,
-	placement_fn = function(c)
-		awful.placement.top(c, {
-			margins = {
-				top = dpi(60),
-			},
-		})
-	end,
-	background_widget = wibox.widget({
-		image = beautiful.wallpaper,
-		horizontal_fit_policy = "fit",
-		vertical_fit_policy = "fit",
-		widget = wibox.widget.imagebox,
-	}),
-})
+--- bling.widget.tag_preview.enable({
+--- 	show_client_content = true,
+--- 	scale = 0.20,
+--- 	honor_workarea = true,
+--- 	honor_padding = true,
+--- 	placement_fn = function(c)
+--- 		awful.placement.top(c, {
+--- 			margins = {
+--- 				top = dpi(60),
+--- 			},
+--- 		})
+--- 	end,
+--- 	background_widget = wibox.widget({
+--- 		image = beautiful.wallpaper,
+--- 		horizontal_fit_policy = "fit",
+--- 		vertical_fit_policy = "fit",
+--- 		widget = wibox.widget.imagebox,
+--- 	}),
+--- })

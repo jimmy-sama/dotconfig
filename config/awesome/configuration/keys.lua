@@ -442,17 +442,17 @@ awful.keyboard.append_global_keybindings({
 
 --- Mouse bindings on desktop
 --- ~~~~~~~~~~~~~~~~~~~~~~~~~
-local main_menu = require("ui.main-menu")
-awful.mouse.append_global_mousebindings({
-	--- Right click
-	awful.button({
-		modifiers = {},
-		button = 3,
-		on_press = function()
-			main_menu:toggle()
-		end,
-	}),
-})
+--- local main_menu = require("ui.main-menu")
+--- awful.mouse.append_global_mousebindings({
+--- 	--- Right click
+--- 	awful.button({
+--- 		modifiers = {},
+--- 		button = 3,
+--- 		on_press = function()
+--- 			main_menu:toggle()
+--- 		end,
+--- 	}),
+--- })
 
 awful.mouse.append_global_mousebindings({
 	--- Left click
