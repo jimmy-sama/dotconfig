@@ -1,0 +1,5 @@
+default_roles:
+  - neovim
+  - kitty
+  - yazi
+  - bat

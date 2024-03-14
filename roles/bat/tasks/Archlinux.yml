@@ -1,0 +1,6 @@
+---
+- name: "Bat | Arch | Install Bat"
+  ansible.builtin.pacman:
+    name: bat
+    state: present
+  become: true

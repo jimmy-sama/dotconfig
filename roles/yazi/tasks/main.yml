@@ -1,0 +1,22 @@
+---
+- name: "Yazi | Checking for Distribution Config: {{ ansible_distribution }}"
+  ansible.builtin.stat:
+    path: "{{ role_path }}/tasks/{{ ansible_distribution }}.yml"
+  register: yazi_distribution_config
+
+- name: "Yazi | Run Tasks: {{ ansible_distribution }}"
+  ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
+  when: yazi_distribution_config.stat.exists
+
+- name: "Yazi | Config folder"
+  ansible.builtin.file:
+    mode: "0755"
+    path: "{{ ansible_user_dir }}/.config/yazi"
+    state: directory
+
+- name: "Yazi | Create symlink to role files directory"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_user_dir }}/.config/yazi"
+    state: link
+    force: true
