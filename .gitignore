@@ -1,5 +1,5 @@
 config/awesome/widgets
-config/nvim/lazy-lock.json
+roles/neovim/files/lazy-lock.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
