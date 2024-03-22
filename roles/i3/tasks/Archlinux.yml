@@ -1,0 +1,8 @@
+---
+- name: "i3 | {{ ansible_distribution }} | Install i3"
+  ansible.builtin.pacman:
+    name: 
+      - i3-wm
+      - i3status
+    state: present
+  become: true

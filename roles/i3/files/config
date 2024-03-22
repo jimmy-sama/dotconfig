@@ -1,0 +1,35 @@
+exec --no-startup-id i3-msg 'workspace 1; exec kitty'
+exec --no-startup-id i3-msg 'workspace 2; exec firefox'
+
+include ~/.config/i3/i3status/statusbar.conf
+include ~/.config/i3/keybindings.conf
+
+# Set mod variable to super key
+set $mod Mod4
+
+# Turn borders off
+for_window [class="^.*"] border pixel 0
+
+# Change gap size
+gaps outer 5
+gaps inner 5
+
+# Drag floating windows
+floating_modifier $mod
+
+# Make sure fonts are loaded right
+exec_always xset +fp ~/.fonts/
+exec_always xset fp rehash
+
+# Run startup wallpaper
+exec_always bash -c "feh --bg-fill ~/Pictures/bg.png"
+
+# Start notification daemon
+
+# Startup daemons for compositor
+exec_always --no-startup-id pkill picom; picom --no-use-damage
+exec_always --no-startup-id pkill dunst; dunst
+
+# Use URxvt settings from Xresources
+exec_always --no-startup-id xrdb ~/.Xresources
+
