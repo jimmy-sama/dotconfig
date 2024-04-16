@@ -1,5 +1,6 @@
 default_roles:
-  - neovim
-  - kitty
-  - yazi
   - bat
+  - i3
+  - kitty
+  - neovim
+  - yazi
