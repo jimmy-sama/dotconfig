@@ -1,6 +1,6 @@
 exec --no-startup-id xrandr --output DP-0 --primary --mode 3440x1440 --rate 143.92
-exec --no-startup-id i3-msg 'workspace 1; exec kitty'
-exec --no-startup-id i3-msg 'workspace 2; exec firefox'
+exec --no-startup-id exec kitty
+exec --no-startup-id exec firefox
 
 include ~/.config/i3/keybindings.conf
 
@@ -19,6 +19,11 @@ gaps inner 5
 # Drag floating windows
 floating_modifier $mod
 
+assign [class="kitty"] 1
+assign [class="firefox"] 2
+assign [class="Mattermost"] 3
+assign [class="VMware Horizon Client"] 6
+
 # Run startup wallpaper
 exec_always bash -c "feh --bg-fill ~/Pictures/wallhaven-85pej2.png"
 
@@ -26,6 +31,6 @@ exec_always bash -c "feh --bg-fill ~/Pictures/wallhaven-85pej2.png"
 exec_always --no-startup-id pkill dunst; dunst
 
 # Startup daemons for compositor
-# exec_always --no-startup-id pkill picom; picom --no-use-damage
+exec_always --no-startup-id pkill picom; picom --no-use-damage
 
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
