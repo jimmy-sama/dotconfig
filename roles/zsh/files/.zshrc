@@ -8,7 +8,7 @@ export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/.cargo/bin
 
 
-ZSH_THEME=""
+ZSH_THEME="robbyrussell"
 
 unsetopt BEEP
 
@@ -29,7 +29,6 @@ HIST_STAMPS="mm/dd/yyyy"
 plugins=(
 	ansible
 	git
-	starship
 	fzf
 	history
 	zsh-syntax-highlighting
