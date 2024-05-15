@@ -1,6 +1,0 @@
----
-- name: "Yazi | {{ ansible_distribution }} | Install Yazi"
-  ansible.builtin.pacman:
-    name: yazi
-    state: present
-  become: true

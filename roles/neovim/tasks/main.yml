@@ -6,7 +6,7 @@
 
 - name: "Neovim | Run Tasks: {{ ansible_distribution }}"
   ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
-  when: neovim_distribution_config.stat.exists
+  when: ansible_facts['os_family'] == "Arch"
 
 - name: "Neovim | Config folder"
   ansible.builtin.file:

@@ -1,6 +1,0 @@
----
-- name: "Kitty | {{ ansible_distribution }} | Install Kitty"
-  ansible.builtin.pacman:
-    name: kitty
-    state: present
-  become: true
