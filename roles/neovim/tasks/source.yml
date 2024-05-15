@@ -1,0 +1,45 @@
+---
+- name: Install Neovim build dependencies
+  block:
+    - name: Install Debian build dependencies.
+      become: true
+      ansible.builtin.apt:
+        name:
+          - cmake
+          - curl
+          - gettext
+          - git
+          - ninja-build
+          - unzip
+          - build-essentials
+        state: latest
+      when: ansible_distribution == "Debian"
+
+    - name: Install Fedora build dependencies.
+      become: true
+      ansible.builtin.dnf:
+        name:
+          - cmake
+          - curl
+          - gcc
+          - gettext
+          - git
+          - make
+          - ninja-build
+          - unzip
+          - glibc-gconv-extra
+        state: latest
+      when: ansible_distribution == 'Fedora'
+
+    - name: Install openSuse build dependencies.
+      become: true
+      ansible.builtin.zypper:
+        name:
+          - cmake
+          - curl
+          - gcc-c++
+          - gettext-tools
+          - git
+          - ninja
+        state: latest
+      when: ansible_distribution == 'Fedora'
