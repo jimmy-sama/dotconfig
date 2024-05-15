@@ -1,0 +1,60 @@
+## Reload This Config
+super + Escape
+	pkill -USR1 -x sxhkd
+
+# BSPWM KEYBINDS
+
+## Close Application
+super + q
+	bspc node -c
+
+## Close / Restart
+super + shift + {q,r}
+	bspc {quit,wm -r}
+
+## Window State
+super + shift + {t,f}
+	bspc node -t {tiled,floating}
+
+# Focus / Swap Window
+super + {_,shift + }{h,j,k,l}
+	bspc node -{f,s} {west,south,north,east}
+
+# Focus / Send Desktop
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} focused:'^{1-9,10}'
+
+
+# APPLICATION KEYBINDS
+
+super + Return
+	kitty
+
+super + shift + Return
+	rofi -show drun
+
+super + w
+	firefox
+
+super + g
+	gimp
+
+super + d
+	discord
+
+super + o
+	obs
+
+super + f
+	pcmanfm
+
+# ROFI SCRIPTS KEYBINDS
+super + e
+	dmoji
+
+super + s
+	rofi-screenshot
+
+# VOLUME UP & DOWN KEYBINDS
+XF86Audio{RaiseVolume,LowerVolume}
+    {vol-plus, vol-down}
