@@ -5,22 +5,20 @@ RED='\e[31m'
 YELLOW='\e[33m'
 GREEN='\e[32m'
 
-git pull
-
 command_exists () {
     command -v $1 >/dev/null 2>&1;
 }
 
 checkEnv() {
     ## Check for requirements.
-    REQUIREMENTS='curl groups sudo'
+    REQUIREMENTS='groups sudo'
     if ! command_exists ${REQUIREMENTS}; then
         echo -e "${RED}To run me, you need: ${REQUIREMENTS}${RC}"
         exit 1
     fi
 
     ## Check Package Handeler
-    PACKAGEMANAGER='apt dnf pacman'
+    PACKAGEMANAGER='apt dnf pacman zypper'
     for pgm in ${PACKAGEMANAGER}; do
         if command_exists ${pgm}; then
             PACKAGER=${pgm}
@@ -54,17 +52,21 @@ checkEnv() {
     fi
 }
 
-execPlaybook() {
-    DEPENDENCIES="ansible" 
+installDependencies() {
+    DEPENDENCIES="ansible git"
     sudo ${PACKAGER} install -y ${DEPENDENCIES}
+}
+
+execPlaybook() {
     if [[ `uname` == 'Linux' ]]; then
-        ansible-playbook -i inventory linux.yml
+        git clone https://github.com/jimmy-sama/dotconfig.git && cd dotconfig
+        ansible-playbook main.yml -K
     else
         echo -e "${RED}Only Linux systems are supported at this time!${RC}"
         exit 1
     fi
 }
 
-
 checkEnv
+installDependencies
 execPlaybook
