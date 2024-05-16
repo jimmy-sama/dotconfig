@@ -3,6 +3,7 @@
   ansible.builtin.package:
     name: bat
     state: latest
+  become: true
 
 - name: "Batcat | Config folder"
   ansible.builtin.file:

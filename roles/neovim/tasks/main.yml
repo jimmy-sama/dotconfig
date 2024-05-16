@@ -7,6 +7,7 @@
   ansible.builtin.package:
     name: neovim
     state: latest
+  become: true
   when: ansible_facts['os_family'] != "Archlinux"
 
 # - name: "Built Neovim from Source"

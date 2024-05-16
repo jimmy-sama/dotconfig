@@ -3,6 +3,7 @@
   ansible.builtin.package:
     name: yazi
     state: latest
+  become: true
 
 - name: "Yazi | Config folder"
   ansible.builtin.file:
