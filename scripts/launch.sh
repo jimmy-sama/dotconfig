@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 RC='\e[0m'
 RED='\e[31m'
@@ -54,12 +54,31 @@ checkEnv() {
 
 installDependencies() {
     DEPENDENCIES="ansible git"
-    sudo ${PACKAGER} install -y ${DEPENDENCIES}
+    echo -e "${YELLOW}Installing dependencies...${RC}"
+    if [[ $PACKAGER == "pacman" ]]; then
+        if ! command_exists yay && ! command_exists paru; then
+            echo "Installing yay as AUR helper..."
+            sudo ${PACKAGER} --noconfirm -S base-devel
+            git clone https://aur.archlinux.org/paru.git
+            cd paru && makepkg --noconfirm -si
+            cd .. && rm -rf paru
+        else
+            echo "Aur helper already installed"
+        fi
+        if ! command_exists yay && ! command_exists paru; then
+            echo "No AUR helper found. Please install yay or paru."
+            exit 1
+        fi
+        ${PACKAGER} --noconfirm -S ${DEPENDENCIES}
+    else
+        sudo ${PACKAGER} install -yq ${DEPENDENCIES}
+    fi
 }
 
 execPlaybook() {
     if [[ `uname` == 'Linux' ]]; then
-        git clone https://github.com/jimmy-sama/dotconfig.git && cd dotconfig
+        mkdir -p ~/workspace/github/
+        git clone https://github.com/jimmy-sama/dotconfig.git ~/workspace/github/dotconfig/
         ansible-playbook main.yml -K
     else
         echo -e "${RED}Only Linux systems are supported at this time!${RC}"
