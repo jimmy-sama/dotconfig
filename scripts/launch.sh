@@ -50,7 +50,7 @@ installDependencies() {
     DEPENDENCIES="ansible git"
     echo -e "${YELLOW}Installing dependencies...${RC}"
     if [[ $PACKAGER == "pacman" ]]; then
-        sudo ${PACKAGER} --noconfirm -S ${DEPENDENCIES}
+        sudo ${PACKAGER} --noconfirm -S ${DEPENDENCIES} --needed
         if ! command_exists yay && ! command_exists paru; then
             echo "Installing paru as AUR helper..."
             sudo ${PACKAGER} --noconfirm -S base-devel
@@ -61,8 +61,10 @@ installDependencies() {
             echo "Aur helper already installed"
         fi
         if ! command_exists yay && ! command_exists paru; then
-            echo "No AUR helper found. Please install yay or paru."
+            echo "The Installation failed try again or install paru/yay manually."
             exit 1
+        else
+            ansible-galaxy collection install kewlfft.aur
         fi
     else
         sudo ${PACKAGER} install -yq ${DEPENDENCIES}
@@ -73,6 +75,7 @@ execPlaybook() {
     if [[ `uname` == 'Linux' ]]; then
         mkdir -p ~/workspace/github/
         git clone https://github.com/jimmy-sama/dotconfig.git ~/workspace/github/dotconfig/
+        cd ~/workspace/github/dotconfig/
         ansible-playbook main.yml -K
     else
         echo -e "${RED}Only Linux systems are supported at this time!${RC}"
