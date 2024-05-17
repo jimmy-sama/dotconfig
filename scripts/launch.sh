@@ -50,6 +50,7 @@ installDependencies() {
     DEPENDENCIES="ansible git"
     echo -e "${YELLOW}Installing dependencies...${RC}"
     if [[ $PACKAGER == "pacman" ]]; then
+        ${PACKAGER} --noconfirm -S ${DEPENDENCIES}
         if ! command_exists yay && ! command_exists paru; then
             echo "Installing yay as AUR helper..."
             sudo ${PACKAGER} --noconfirm -S base-devel
@@ -63,7 +64,6 @@ installDependencies() {
             echo "No AUR helper found. Please install yay or paru."
             exit 1
         fi
-        ${PACKAGER} --noconfirm -S ${DEPENDENCIES}
     else
         sudo ${PACKAGER} install -yq ${DEPENDENCIES}
     fi
