@@ -50,7 +50,7 @@ installDependencies() {
     DEPENDENCIES="ansible git"
     echo -e "${YELLOW}Installing dependencies...${RC}"
     if [[ $PACKAGER == "pacman" ]]; then
-        ${PACKAGER} --noconfirm -S ${DEPENDENCIES}
+        sudo ${PACKAGER} --noconfirm -S ${DEPENDENCIES}
         if ! command_exists yay && ! command_exists paru; then
             echo "Installing paru as AUR helper..."
             sudo ${PACKAGER} --noconfirm -S base-devel
