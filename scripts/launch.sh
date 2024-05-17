@@ -17,25 +17,6 @@ checkEnv() {
         exit 1
     fi
 
-    ## Check Package Handeler
-    PACKAGEMANAGER='apt dnf pacman zypper'
-    for pgm in ${PACKAGEMANAGER}; do
-        if command_exists ${pgm}; then
-            PACKAGER=${pgm}
-            echo -e "Using ${pgm}"
-        fi
-    done
-    if [ -z "${PACKAGER}" ]; then
-        echo -e "${RED}Can't find a supported package manager"
-        exit 1
-    fi
-
-    ## Check if the current directory is writable
-    GITPATH="$(dirname "$(realpath "$0")")"
-    if [[ ! -w ${GITPATH} ]]; then
-      echo -e "${RED}Can't write to ${GITPATH}${RC}"
-      exit 1
-   fi
     ## Check SuperUser Group
     SUPERUSERGROUP='wheel sudo'
     for sug in ${SUPERUSERGROUP}; do
@@ -53,6 +34,19 @@ checkEnv() {
 }
 
 installDependencies() {
+    ## Check Package Handeler
+    PACKAGEMANAGER='apt dnf pacman zypper'
+    for pgm in ${PACKAGEMANAGER}; do
+        if command_exists ${pgm}; then
+            PACKAGER=${pgm}
+            echo -e "Using ${pgm}"
+        fi
+    done
+    if [ -z "${PACKAGER}" ]; then
+        echo -e "${RED}Can't find a supported package manager"
+        exit 1
+    fi
+
     DEPENDENCIES="ansible git"
     echo -e "${YELLOW}Installing dependencies...${RC}"
     if [[ $PACKAGER == "pacman" ]]; then
