@@ -25,12 +25,14 @@ HIST_STAMPS="mm/dd/yyyy"
 # Some plugins need to be installed manually first!
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 # git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
+# curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
 
 plugins=(
 	ansible
 	git
 	fzf
 	history
+	zoxide
 	zsh-syntax-highlighting
 	zsh-history-substring-search
 )
