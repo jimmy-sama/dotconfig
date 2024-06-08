@@ -1,20 +1,30 @@
-## Reload This Config
-super + Escape
+#########################
+# 	  BSPWM		#
+#########################
+
+# Reload sxhkd config
+super + alt + r
 	pkill -USR1 -x sxhkd
 
-# BSPWM KEYBINDS
-
-## Close Application
-super + q
-	bspc node -c
-
-## Close / Restart
+## Quit / Restart bspwm
 super + shift + {q,r}
 	bspc {quit,wm -r}
 
+## Close / Kill application
+super + {_,shift} + q
+	bspc node -{c,k}
+
+# alternate between the tiled and monocle layout
+super + m
+	bspc desktop -l next
+
+# swap the current node and the biggest window
+super + shift + g
+	bspc node -s biggest.window
+
 ## Window State
-super + shift + {t,f}
-	bspc node -t {tiled,floating}
+super + shift + {t,f,m}
+	bspc node -t {tiled,floating,fullscreen}
 
 # Focus / Swap Window
 super + {_,shift + }{h,j,k,l}
@@ -24,14 +34,33 @@ super + {_,shift + }{h,j,k,l}
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} focused:'^{1-9,10}'
 
+# decrease window in corresponding Vim key direction
+super + alt + {h,j,k,l}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 
-# APPLICATION KEYBINDS
+# decrease window in corresponding Vim key direction
+super + shift + alt + {h,j,k,l}
+        bspc node -z {left 20 0,bottom 0 -20,top 0 20,right -20 0}
 
+#########################
+#	PROGRAMS	#
+#########################
+
+# Terminal Emulator
 super + Return
 	kitty
 
+# Application Launcher
 super + shift + Return
 	rofi -show drun
+
+# File Manager
+super + f
+	kitty -e yazi ~/
+
+# Task Manager
+ctrl + shift + Escape
+	kitty -e btop
 
 super + w
 	firefox
@@ -45,16 +74,10 @@ super + d
 super + o
 	obs
 
-super + f
-	pcmanfm
-
-# ROFI SCRIPTS KEYBINDS
-super + e
-	dmoji
-
-super + s
-	rofi-screenshot
+#########################
+#	  MEDIA		#
+#########################
 
 # VOLUME UP & DOWN KEYBINDS
 XF86Audio{RaiseVolume,LowerVolume}
-    {vol-plus, vol-down}
+    pamixer {-i 5,-d 5}
