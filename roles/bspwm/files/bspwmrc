@@ -25,5 +25,14 @@ bspc rule -a '*:Toolkit:Picture in Picture' \
 dunst &
 feh --bg-fill ~/Pictures/wh-p9pgjp.jpg &
 xrandr --output DP-0 --primary --mode 3440x1440 --rate 143.92 &
-xsetroot -cursor_name left_ptr
+xsetroot -cursor_name left_ptr &
 
+# Autostart
+startup_lock_file=/tmp/bspwm-startup.lock
+if [ ! -f $startup_lock_file ]; then
+	echo "Created at: $(date)" > $startup_lock_file
+	bspc rule -a kitty desktop=^1 follow=off -o
+	bspc rule -a firefox desktop=^2 follow=off -o
+	firefox &
+	kitty
+fi
