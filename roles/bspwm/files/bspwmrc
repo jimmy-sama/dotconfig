@@ -23,7 +23,7 @@ bspc rule -a '*:Toolkit:Picture in Picture' \
 	rectangle=640x360+2760+1040
 
 dunst &
-feh --bg-fill ~/Pictures/localhost.png &
+feh --bg-fill ~/Pictures/wh-p9pgjp.jpg &
 xrandr --output DP-0 --primary --mode 3440x1440 --rate 143.92 &
 xsetroot -cursor_name left_ptr
 

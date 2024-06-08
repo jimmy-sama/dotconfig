@@ -75,9 +75,17 @@ super + o
 	obs
 
 #########################
-#	  MEDIA		#
+#	  Media		#
 #########################
 
 # VOLUME UP & DOWN KEYBINDS
 XF86Audio{RaiseVolume,LowerVolume}
     pamixer {-i 5,-d 5}
+
+#########################
+#	  Scripts	#
+#########################
+
+# display date
+super + t
+	$HOME/.local/bin/time_date.sh
