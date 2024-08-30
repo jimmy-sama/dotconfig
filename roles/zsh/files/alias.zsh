@@ -1,13 +1,8 @@
 # To temporarily bypass an alias, we precede the command with a \
-
 alias vim='nvim'
 alias vi='nvim'
 
 alias cat='bat'
-
-# Alias's for SSH
-# alias SERVERNAME='ssh YOURWEBSITE.com -l USERNAME -p PORTNUMBERHERE'
-alias phanpy='ssh phanpy.logodata.intern -l admin'
 
 # Alias's to modified commands
 alias mkdir='mkdir -p'
@@ -27,10 +22,6 @@ alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
 
 # Show open ports
 alias openports='netstat -nape --inet'
-
-# Alias's for safe and forced reboots
-alias rebootsafe='sudo shutdown -r now'
-alias rebootforce='sudo shutdown -r -n now'
 
 # Alias's to show disk space and space used in a folder
 alias diskspace="du -S | sort -n -r |more"
@@ -53,5 +44,5 @@ alias logs="sudo find /var/log -type f -exec file {} \; | grep 'text' | cut -d' 
 
 alias clickpaste='sleep 3; xdotool type "$(xclip -o -selection clipboard)"'
 
-alias update_req='pip freeze | cut -d"=" -f1 > ~/GitHub/python_collection/hundred-days/requirements.txt'
-
+alias poweroff='systemctl poweroff'
+alias reboot='systemctl reboot'
