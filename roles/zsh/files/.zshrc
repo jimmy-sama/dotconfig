@@ -4,6 +4,7 @@ export EDITOR="nvim"
 
 export ENV_VAULT=$HOME/.env_vault
 export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/usr/sbin
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/.cargo/bin
 
