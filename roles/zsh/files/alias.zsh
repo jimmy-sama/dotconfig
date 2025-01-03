@@ -1,6 +1,7 @@
 # To temporarily bypass an alias, we precede the command with a \
 alias vim='nvim'
 alias vi='nvim'
+alias aon='NVIM_APPNAME=aon nvim'
 
 alias cat='bat'
 
