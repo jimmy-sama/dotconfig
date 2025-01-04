@@ -68,6 +68,7 @@ installDependencies() {
         fi
     else
         sudo ${PACKAGER} install -yq ${DEPENDENCIES}
+	ansible-galaxy install -r requirements.yml
     fi
 }
 

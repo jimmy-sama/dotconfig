@@ -42,4 +42,4 @@
           - git
           - ninja
         state: latest
-      when: ansible_distribution == 'Fedora'
+      when: ansible_distribution == 'openSuse'
