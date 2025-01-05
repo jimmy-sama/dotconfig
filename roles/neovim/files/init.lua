@@ -1,4 +1,4 @@
-print("Building my nvim config from scratch, thanks teej!")
+-- print("Building my nvim config from scratch, thanks teej!")
 
 require("config.lazy")
 
