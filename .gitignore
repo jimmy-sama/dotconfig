@@ -1,5 +1,10 @@
 roles/neovim/files/lazy-lock.json
 
+roles/dwm/files/config.def.h.orig
+roles/dwm/files/config.def.h.rej
+roles/dwm/files/dwm.c.orig
+roles/dwm/files/dwm.c.rej
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
