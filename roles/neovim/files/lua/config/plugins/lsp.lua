@@ -26,6 +26,13 @@ return {
           },
         },
       }
+      require("lspconfig").pylsp.setup {
+        capabilities = capabilities,
+      }
+
+      require("lspconfig").gopls.setup {
+        capabilities = capabilities,
+      }
 
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
