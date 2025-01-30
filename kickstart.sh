@@ -80,12 +80,12 @@ installDepend() {
 }
 
 startAnsible() {
-    echo "${YELLOW}Cloning dotconfig repository into: $XDG_CONFIG_HOME/configManager${RC}"
-    git clone https://github.com/jimmy-sama/dotconfig "$XDG_CONFIG_HOME/configManager"
+    echo "${YELLOW}Cloning dotconfig repository into: $HOME/configManager${RC}"
+    git clone https://github.com/jimmy-sama/dotconfig "$HOME/configManager"
     if [ $? -eq 0 ]; then
-	echo "${GREEN}Successfully cloned mybash repository${RC}"
+	echo "${GREEN}Successfully cloned dotconfig repository${RC}"
     else
-	echo "${RED}Failed to clone mybash repository${RC}"
+	echo "${RED}Failed to clone dotconfig repository${RC}"
 	exit 1
     fi
 
