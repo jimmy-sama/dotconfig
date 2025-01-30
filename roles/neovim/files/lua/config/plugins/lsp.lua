@@ -32,6 +32,13 @@ return {
 
       require("lspconfig").gopls.setup {
         capabilities = capabilities,
+        settings = {
+          gopls = {
+            analyses = {
+              unusedparams = true,
+            },
+          },
+        },
       }
 
       vim.api.nvim_create_autocmd('LspAttach', {
