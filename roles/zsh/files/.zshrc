@@ -2,9 +2,12 @@ export ZSH="$HOME/.oh-my-zsh"
 export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST
 export EDITOR="nvim"
 
+export VAGRANT_DEFAULT_PROVIDER=docker
 export ENV_VAULT=$HOME/.env_vault
-export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:/usr/sbin
+export PATH=$PATH:/usr/lib
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/.cargo/bin
 
@@ -40,4 +43,3 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH=$PATH:$HOME/go/bin
