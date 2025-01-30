@@ -4,6 +4,9 @@ roles/dwm/files/config.def.h.orig
 roles/dwm/files/config.def.h.rej
 roles/dwm/files/dwm.c.orig
 roles/dwm/files/dwm.c.rej
+roles/dwm/files/dwm
+roles/dwm/files/slstatus/slstatus
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
