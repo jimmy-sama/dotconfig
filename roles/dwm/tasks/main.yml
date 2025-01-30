@@ -1,0 +1,10 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/slstatus
+- name: slstatus configuration file
+  template:
+    src: config.h.j2
+    dest: config/config.h
+    mode: 0755
+    owner: nedry
+    group: nedry
