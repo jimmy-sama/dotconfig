@@ -1,10 +1,5 @@
 #!/usr/bin/bash
 
-RC='\033[0m'
-RED='\033[31m'
-YELLOW='\033[33m'
-GREEN='\033[32m'
-
 command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
@@ -14,7 +9,7 @@ checkEnv() {
     REQUIREMENTS='curl groups sudo'
     for req in $REQUIREMENTS; do
         if ! command_exists "$req"; then
-            echo "${RED}To run me, you need: $REQUIREMENTS${RC}"
+            echo "$To run me, you need: $REQUIREMENTS"
             exit 1
         fi
     done
@@ -30,7 +25,7 @@ checkEnv() {
     done
 
     if [ -z "$PACKAGER" ]; then
-        echo "${RED}Can't find a supported package manager${RC}"
+        echo "Can't find a supported package manager"
         exit 1
     fi
 
@@ -45,7 +40,7 @@ checkEnv() {
     ## Check if the current directory is writable.
     GITPATH=$(dirname "$(realpath "$0")")
     if [ ! -w "$GITPATH" ]; then
-        echo "${RED}Can't write to $GITPATH${RC}"
+        echo "Can't write to $GITPATH"
         exit 1
     fi
 
@@ -62,7 +57,7 @@ checkEnv() {
 
     ## Check if member of the sudo group.
     if ! groups | grep -q "$SUGROUP"; then
-        echo "${RED}You need to be a member of the sudo group to run me!${RC}"
+        echo "You need to be a member of the sudo group to run me!"
         exit 1
     fi
 }
@@ -71,7 +66,7 @@ installDepend() {
     ## Check for dependencies.
     DEPENDENCIES='ansible git'
 
-    echo "${YELLOW}Installing dependencies...${RC}"
+    echo "Installing dependencies..."
     if [ "$PACKAGER" = "pacman" ]; then
         ${SUDO_CMD} ${PACKAGER} -S ${DEPENDENCIES} --needed --noconfirm
     elif [ "$PACKAGER" = "dnf" ]; then
@@ -80,16 +75,16 @@ installDepend() {
 }
 
 startAnsible() {
-    echo "${YELLOW}Cloning dotconfig repository into: $HOME/configManager${RC}"
+    echo "Cloning dotconfig repository into: $HOME/configManager"
     git clone https://github.com/jimmy-sama/dotconfig "$HOME/configManager"
     if [ $? -eq 0 ]; then
-	echo "${GREEN}Successfully cloned dotconfig repository${RC}"
+	echo "Successfully cloned dotconfig repository"
     else
-	echo "${RED}Failed to clone dotconfig repository${RC}"
+	echo "Failed to clone dotconfig repository"
 	exit 1
     fi
 
-    echo "${RED}Here should start the playbook if it is in a usable state${RC}"
+    echo "Here should start the playbook if it is in a usable state"
 }
 
 checkEnv
