@@ -6,7 +6,7 @@ command_exists() {
 
 checkEnv() {
     ## Check for requirements.
-    REQUIREMENTS='curl groups sudo'
+    REQUIREMENTS='groups sudo'
     for req in $REQUIREMENTS; do
         if ! command_exists "$req"; then
             echo "$To run me, you need: $REQUIREMENTS"
@@ -38,9 +38,9 @@ checkEnv() {
     echo "Using $SUDO_CMD as privilege escalation software"
 
     ## Check if the current directory is writable.
-    GITPATH=$(dirname "$(realpath "$0")")
-    if [ ! -w "$GITPATH" ]; then
-        echo "Can't write to $GITPATH"
+    CWD=$(dirname "$(realpath "$0")")
+    if [ ! -w "$CWD" ]; then
+        echo "Can't write to $CWD"
         exit 1
     fi
 
@@ -84,7 +84,7 @@ startAnsible() {
 	exit 1
     fi
 
-    echo "Here should start the playbook if it is in a usable state"
+    echo "Here should start the ansible playbook if it is in a usable state"
 }
 
 checkEnv
