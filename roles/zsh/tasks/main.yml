@@ -15,9 +15,15 @@
     name: "{{ ansible_user_id }}"
     shell: /usr/bin/zsh
 
-- name: Install oh-my-zsh in a custom directory
-  ansible.builtin.shell:
-    cmd: export "{{ OMZ_DIR }}" && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+# - name: Install oh-my-zsh in a custom directory
+#   ansible.builtin.shell:
+#     cmd: export "{{ OMZ_DIR }}" && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
+- name: Clone external plugins from defaults dictionary
+  ansible.builtin.git:
+    repo: "{{ item.value }}"
+    dest: "{{ OMZ_CUSTOM }}/plugins/{{ item.key }}"
+  loop: "{{ ZSH_CUSTOM_PLUGINS | dict2items }}"
 
 - name: Link .zshrc file
   ansible.builtin.file:
