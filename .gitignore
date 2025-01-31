@@ -1,11 +1,13 @@
-roles/neovim/files/lazy-lock.json
+ansible.cfg
 
-roles/dwm/files/config.def.h.orig
-roles/dwm/files/config.def.h.rej
-roles/dwm/files/dwm.c.orig
-roles/dwm/files/dwm.c.rej
-roles/dwm/files/dwm
-roles/dwm/files/slstatus/slstatus
+*/lazy-lock.json
+
+*/config.def.h.orig
+*/config.def.h.rej
+*/dwm.c.orig
+*/dwm.c.rej
+*/dwm
+*/slstatus/slstatus
 
 # Prerequisites
 *.d

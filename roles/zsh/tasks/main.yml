@@ -1,0 +1,37 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for zsh
+- name: Install zsh
+  ansible.builtin.package:
+    name: 
+      - zsh
+      - fzf
+      - git
+      - curl
+    state: present
+
+- name: Change default shell to zsh
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    shell: /usr/bin/zsh
+
+- name: Install oh-my-zsh in a custom directory
+  ansible.builtin.shell:
+    cmd: export "{{ OMZ_DIR }}" && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
+- name: Link .zshrc file
+  ansible.builtin.file:
+    src: "{{ role_path }}/files/zshrc"
+    dest: "{{ ansible_env.HOME }}/.zshrc"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    state: link
+
+- name: Link custom files from defaults dictionary
+  ansible.builtin.file:
+    src: "{{ item.value }}"
+    dest: "{{ OMZ_CUSTOM }}/{{ item.key }}"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    state: link
+  loop: "{{ ZSH_CUSTOM_FILES | dict2items }}"
