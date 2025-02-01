@@ -52,7 +52,7 @@ plugins=(
     history
     podman
     rsync
-    zsh-history-substring-search
+    zsh-fzf-history-search
     zsh-syntax-highlighting
 )
 
