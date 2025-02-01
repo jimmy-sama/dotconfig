@@ -1,7 +1,8 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # defaults file for zsh
-OMZ_DIR: ZSH=$HOME/.config/omz
+OMZ_DIR: $HOME/.config/omz
+EXPORT_OMZ_DIR: ZSH=$HOME/.config/omz
 OMZ_CUSTOM: $HOME/.config/omz/custom
 
 ZSH_CUSTOM_FILES: {
