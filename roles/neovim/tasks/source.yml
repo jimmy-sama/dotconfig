@@ -43,3 +43,23 @@
           - ninja
         state: latest
       when: ansible_distribution == 'openSuse'
+
+- name: Clone the repo
+  ansible.builtin.git:
+    repo: "https://github.com/neovim/neovim"
+    dest: /tmp/neovim
+    single_branch: yes
+    version: stable
+
+- name: Build neovim from stable source
+  community.general.make:
+    chdir: /tmp/neovim
+    target: install
+    params:
+      CMAKE_BUILD_TYPE: RelWithDebInfo
+  become: true
+
+- name: remove dir
+  ansible.builtin.file:
+    path: /etc/neovim
+    state: absent

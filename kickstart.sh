@@ -69,6 +69,7 @@ installDepend() {
     echo "Installing dependencies..."
     if [ "$PACKAGER" = "pacman" ]; then
         ${SUDO_CMD} ${PACKAGER} -S ${DEPENDENCIES} --needed --noconfirm
+	ansible-galaxy collection install kewlfft.aur
     elif [ "$PACKAGER" = "dnf" ]; then
         ${SUDO_CMD} ${PACKAGER} install -y ${DEPENDENCIES}
     fi
