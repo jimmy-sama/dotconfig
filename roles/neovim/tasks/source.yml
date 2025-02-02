@@ -44,22 +44,38 @@
         state: latest
       when: ansible_distribution == 'openSuse'
 
-- name: Clone the repo
-  ansible.builtin.git:
-    repo: "https://github.com/neovim/neovim"
+- name: get neovim's latest stable version from github
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/neovim/neovim/releases/latest"
+    method: get
+    return_content: true
+    headers:
+      accept: "application/vnd.github+json"
+      x-github-api-version: "2022-11-28"
+    register: githubout
+
+- name: print githubout
+  ansible.builtin.debug:
+    vars: githubout
+
+- block:
+  - name: Clone the repo
+    ansible.builtin.git:
+      repo: "https://github.com/neovim/neovim"
     dest: /tmp/neovim
     single_branch: yes
     version: stable
 
-- name: Build neovim from stable source
-  community.general.make:
-    chdir: /tmp/neovim
-    target: install
-    params:
-      CMAKE_BUILD_TYPE: RelWithDebInfo
-  become: true
+  - name: Build neovim from stable source
+    community.general.make:
+      chdir: /tmp/neovim
+      target: install
+      params:
+        CMAKE_BUILD_TYPE: RelWithDebInfo
+    become: true
 
-- name: remove dir
-  ansible.builtin.file:
-    path: /etc/neovim
-    state: absent
+  - name: remove dir
+    ansible.builtin.file:
+      path: /etc/neovim
+      state: absent
+  when: 
