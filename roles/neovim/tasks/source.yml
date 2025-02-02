@@ -61,5 +61,5 @@
 
 - name: remove dir
   ansible.builtin.file:
-    path: /etc/neovim
+    path: /tmp/neovim
     state: absent
