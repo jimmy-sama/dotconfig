@@ -1,6 +1,12 @@
 ---
 - name: Install Neovim build dependencies
   block:
+    - name: Remove existing neovim
+      become: true 
+      ansible.builtin.package:
+        name: neovim
+        state: absent
+
     - name: Install Debian build dependencies.
       become: true
       ansible.builtin.apt:
@@ -44,22 +50,35 @@
         state: latest
       when: ansible_distribution == 'openSuse'
 
-- name: Clone the repo
-  ansible.builtin.git:
-    repo: "https://github.com/neovim/neovim"
-    dest: /tmp/neovim
-    single_branch: yes
-    version: stable
+    - name: Check the latest release against installed neovim version
+      ansible.builtin.script:
+        cmd: library/need_neovim_upgrade.py
+        executable: /usr/bin/python
+      register: need_upgrade
 
-- name: Build neovim from stable source
-  community.general.make:
-    chdir: /tmp/neovim
-    target: install
-    params:
-      CMAKE_BUILD_TYPE: RelWithDebInfo
-  become: true
+    - name: Print log
+      ansible.builtin.debug:
+        var: need_upgrade
 
-- name: remove dir
-  ansible.builtin.file:
-    path: /tmp/neovim
-    state: absent
+- block:
+  - name: Clone the repo
+    ansible.builtin.git:
+      repo: "https://github.com/neovim/neovim"
+      dest: /tmp/neovim
+      single_branch: yes
+      version: stable
+
+  - name: Build neovim from stable source
+    become: true
+    community.general.make:
+      chdir: /tmp/neovim
+      target: install
+      params:
+        CMAKE_BUILD_TYPE: RelWithDebInfo
+
+  - name: remove dir
+    become: true
+    ansible.builtin.file:
+      path: /tmp/neovim
+      state: absent
+  when: need_upgrade.stdout == "needUpgrade\n" 

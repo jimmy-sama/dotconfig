@@ -1,0 +1,7 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/git
+- name: Git checkout
+  ansible.builtin.git:
+    repo: 'https://github.com/jimmy-sama/dotconfig.git'
+    dest: "{{ ansible_env.HOME }}/pullTest" 

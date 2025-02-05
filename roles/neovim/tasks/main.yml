@@ -1,13 +1,13 @@
 ---
-- name: "Install Neovim from AUR"
-  kewlfft.aur.aur:
-    name: neovim-git
-    state: present
-  when: ansible_facts['os_family'] == "Archlinux"
+# - name: "Install Neovim from AUR"
+#   kewlfft.aur.aur:
+#     name: neovim-git
+#     state: present
+#   when: ansible_facts['os_family'] == "Archlinux"
 
 - name: "Built Neovim from Source"
   ansible.builtin.include_tasks: "source.yml"
-  when: ansible_facts['os_family'] != "Archlinux"
+  # when: ansible_facts['os_family'] != "Archlinux"
 
 - name: "Neovim | Config folder"
   ansible.builtin.file:
