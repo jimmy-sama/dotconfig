@@ -1,0 +1,18 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/fonts
+- name: create fonts directory
+  ansible.builtin.file:
+    path: "{{ FONTS_DIR }}/{{ item.key }}"
+    state: directory
+  loop: "{{ FONTS | dict2items }}"
+
+- name: Download Fonts
+  ansible.builtin.unarchive:
+    src: "{{ item.value }}"
+    dest: "{{ FONTS_DIR }}/{{ item.key }}"
+    remote_src: yes
+  loop: "{{ FONTS | dict2items }}"
+
+- name: Run fc-cache command
+  ansible.builtin.command: fc-cache
