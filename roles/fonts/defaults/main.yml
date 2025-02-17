@@ -5,6 +5,8 @@ FONTS_DIR: $HOME/.local/share/fonts
 NERD_FONTS_REPO: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0
 
 FONTS: {
-  "IBMPlexMono": "{{ NERD_FONTS_REPO }}/IBMPlexMono.zip",
+  "3270": "{{ NERD_FONTS_REPO }}/3270.zip",
+  "BigBlueTerm": "{{ NERD_FONTS_REPO }}/BigBlueTerminal.zip",
   "FiraMono": "{{ NERD_FONTS_REPO }}/FiraMono.zip",
+  "IBMPlexMono": "{{ NERD_FONTS_REPO }}/IBMPlexMono.zip",
 }
