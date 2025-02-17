@@ -1,0 +1,10 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for roles/fonts
+FONTS_DIR: $HOME/.local/share/fonts
+NERD_FONTS_REPO: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0
+
+FONTS: {
+  "IBMPlexMono": "{{ NERD_FONTS_REPO }}/IBMPlexMono.zip",
+  "FiraMono": "{{ NERD_FONTS_REPO }}/FiraMono.zip",
+}

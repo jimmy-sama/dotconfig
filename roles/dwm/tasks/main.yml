@@ -1,10 +1,27 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # tasks file for roles/slstatus
+- name: copy config files
+  ansible.builtin.copy:
+    src: files/
+    dest: "{{ ansible_user_dir }}/.config/dwm"
+
 - name: slstatus configuration file
   template:
-    src: config.h.j2
-    dest: config/config.h
+    src: templates/slstatusConfig.h.j2
+    dest: "{{ ansible_user_dir }}/.config/dwm/slstatus/config.h"
     mode: 0755
-    owner: nedry
-    group: nedry
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+
+- name: Run 'install' target as root on dwm
+  community.general.make:
+    chdir: "{{ ansible_user_dir }}/.config/dwm"
+    target: install
+  become: true
+
+- name: Run 'install' target as root on slstatus
+  community.general.make:
+    chdir: "{{ ansible_user_dir }}/.config/dwm/slstatus"
+    target: install
+  become: true
