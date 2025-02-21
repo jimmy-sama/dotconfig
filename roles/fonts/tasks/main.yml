@@ -1,6 +1,23 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # tasks file for roles/fonts
+- name: simple kanji support
+  become: true
+  block:
+    - name: Ensure locales exists
+      community.general.locale_gen:
+        name:
+          - en_US.UTF-8
+          - de_DE.UTF-8
+          - ja_JP.UTF-8
+        state: present
+
+    - name: Install japanese font
+      community.general.pacman:
+        name: adobe-source-han-sans-jp-fonts
+        state: present
+      when: ansible_distribution == "Archlinux"
+
 - name: create fonts directory
   ansible.builtin.file:
     path: "{{ FONTS_DIR }}/{{ item.key }}"
