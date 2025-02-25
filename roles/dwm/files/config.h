@@ -66,7 +66,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_w,      spawn,          {.v = browsercmd } },
-	{ MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD  ("i3lock -t -i ~/Pictures/resistance.png")},
+	{ MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD  ("i3lock -t -i ~/.config/dwm/pictures/localhostV6.png")},
 	{ MODKEY,                       XK_p,      spawn,          SHCMD ("flameshot full -p ~/Pictures/Screenshots/")},
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD ("flameshot gui -p  ~/Pictures/Screenshots/")},
 	{ MODKEY|ControlMask,           XK_p,      spawn,          SHCMD ("flameshot gui --clipboard")},
