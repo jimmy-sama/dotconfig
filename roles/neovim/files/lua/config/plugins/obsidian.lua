@@ -23,13 +23,8 @@ return {
         name = "personal",
         path = "~/workspace/github/Zettelkasten",
       },
-      {
-        name = "work",
-        path = "~/workspace/git/lab/Zettler",
-      },
     },
 
     -- see below for full list of options 👇
   },
 }
-
