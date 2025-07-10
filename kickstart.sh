@@ -15,7 +15,7 @@ checkEnv() {
     done
 
     ## Check Package Handler
-    PACKAGEMANAGER='pacman dnf'
+    PACKAGEMANAGER='dnf nala apt zypper pacman'
     for pgm in $PACKAGEMANAGER; do
         if command_exists "$pgm"; then
             PACKAGER="$pgm"
@@ -64,15 +64,22 @@ checkEnv() {
 
 installDepend() {
     ## Check for dependencies.
-    DEPENDENCIES='ansible git'
+    DEPENDENCIES='ansible-core git python'
 
     echo "Installing dependencies..."
-    if [ "$PACKAGER" = "pacman" ]; then
-        ${SUDO_CMD} ${PACKAGER} -S ${DEPENDENCIES} --needed --noconfirm
-	ansible-galaxy collection install kewlfft.aur
-    elif [ "$PACKAGER" = "dnf" ]; then
-        ${SUDO_CMD} ${PACKAGER} install -y ${DEPENDENCIES}
-    fi
+    case "$PACKAGER" in
+        pacman)
+            ${SUDO_CMD} ${PACKAGER} -S ${DEPENDENCIES} --needed --noconfirm
+	    ansible-galaxy collection install kewlfft.aur
+	    ;;
+	zypper)
+            ${SUDO_CMD} ${PACKAGER} install -n ${DEPENDENCIES}
+	    ;;
+	*)
+            ${SUDO_CMD} ${PACKAGER} install -y ${DEPENDENCIES}
+    esac
+
+    ansible-galaxy collection install community.general
 }
 
 startAnsible() {

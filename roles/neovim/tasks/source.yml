@@ -35,11 +35,11 @@
           - unzip
           - glibc-gconv-extra
         state: latest
-      when: ansible_distribution == 'Fedora'
+      when: ansible_os_family == 'RedHat'
 
     - name: Install openSuse build dependencies.
       become: true
-      ansible.builtin.zypper:
+      community.general.zypper:
         name:
           - cmake
           - curl
@@ -49,6 +49,18 @@
           - ninja
         state: latest
       when: ansible_distribution == 'openSuse'
+
+    - name: Install Python-pip
+      ansible.builtin.package:
+        name: python3-pip
+        state: present
+      become: true
+
+    - name: Ensure python-requests is installed
+      ansible.builtin.pip:
+        name: requests
+        state: present
+      become: true
 
     - name: Check the latest release against installed neovim version
       ansible.builtin.script:
