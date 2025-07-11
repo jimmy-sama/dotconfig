@@ -62,31 +62,32 @@
         state: present
       become: true
 
-    - name: Check the latest release against installed neovim version
-      ansible.builtin.script:
-        cmd: library/need_neovim_upgrade.py
-        executable: /usr/bin/python
-      register: need_upgrade
+- name: Compare current installed version against latest stable
+  ansible.builtin.script:
+    cmd: library/need_neovim_upgrade.py
+    executable: /usr/bin/python
+  register: need_upgrade
 
-- block:
-  - name: Clone the repo
-    ansible.builtin.git:
-      repo: "https://github.com/neovim/neovim"
-      dest: /tmp/neovim
-      single_branch: yes
-      version: stable
+- name: Build from source if there is a new stable version
+  block:
+    - name: Clone the repo
+      ansible.builtin.git:
+        repo: "https://github.com/neovim/neovim"
+        dest: /tmp/neovim
+        single_branch: yes
+        version: stable
 
-  - name: Build neovim from stable source
-    become: true
-    community.general.make:
-      chdir: /tmp/neovim
-      target: install
-      params:
-        CMAKE_BUILD_TYPE: RelWithDebInfo
+    - name: Build neovim from stable source
+      become: true
+      community.general.make:
+        chdir: /tmp/neovim
+        target: install
+        params:
+          CMAKE_BUILD_TYPE: RelWithDebInfo
 
-  - name: remove dir
-    become: true
-    ansible.builtin.file:
-      path: /tmp/neovim
-      state: absent
-  when: need_upgrade.stdout == "needUpgrade\n" 
+    - name: remove dir
+      become: true
+      ansible.builtin.file:
+        path: /tmp/neovim
+        state: absent
+  when: need_upgrade.stdout | trim == 'needUpgrade' 
