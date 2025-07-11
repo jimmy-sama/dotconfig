@@ -21,7 +21,7 @@
         state: latest
       when: ansible_distribution == "Debian"
 
-    - name: Install Fedora build dependencies.
+    - name: Install RedHat build dependencies.
       become: true
       ansible.builtin.dnf:
         name:

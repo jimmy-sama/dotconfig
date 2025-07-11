@@ -1,29 +1,74 @@
 ---
-- name: Dotfiles Config
+- name: Deployment of Custom Facts
   hosts: localhost
   connection: local
+  become: true
 
   tasks:
-    - name: Set roles
-      ansible.builtin.set_fact:
-        run_roles: "{{ ansible_run_tags != ['all'] and ansible_run_tags or default_roles | difference(exclude_roles | default([])) }}"
-      tags:
-        - always
+    - name: Ensure /etc/ansible/facts.d directory exists
+      ansible.builtin.file:
+        path: /etc/ansible/facts.d
+        state: directory
+        mode: '0755'
+        owner: 'root'
+        group: 'root'
+    
+    - name: Deploy the system_type.fact script
+      ansible.builtin.copy:
+        src: files/system_type.fact
+        dest: /etc/ansible/facts.d/system_type.fact
+        mode: '0755'
+        owner: 'root'
+        group: 'root'
 
-    - name: Display roles
+    - name: Explicitly re-gather facts AFTER custom fact deployment
+      ansible.builtin.setup:
+        # No arguments needed, just re-run the fact gathering process
+      # This task MUST run after the 'copy' task to pick up the new fact.
+
+- name: Configure the System Based on Custom Facts
+  hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+    - name: Gather facts (including custom facts)
+      ansible.builtin.setup: # The 'setup' module is used for fact gathering
+
+    - name: Configure system based on type
       ansible.builtin.debug:
-        var: run_roles
-      tags:
-        - always
+        msg: "System type detected: {{ ansible_local.system_type.system_type.type }}"
+      when: ansible_local.system_type.system_type is defined
 
-    - name: Run roles
-      ansible.builtin.include_role:
-        apply:
-          tags:
-            - "{{ roles_item }}"
-        name: "{{ roles_item }}"
-      loop_control:
-        loop_var: roles_item
-      with_items: "{{ run_roles }}"
-      tags:
-        - always
+    - name: Configure CLI System
+      block:
+        - name: Include CLI specific roles if it's a CLI system
+          ansible.builtin.include_role:
+            name: "{{ item }}"
+          loop:
+            - neovim
+            - zsh
+      when: ansible_local.system_type.system_type.type == 'cli'
+
+    - name: Configure GUI System
+      block:
+
+        - name: Find all roles in the 'roles' directory
+          ansible.builtin.find:
+            paths: ./roles/ # Search in the roles directory relative to the playbook
+            file_type: directory
+            depth: 1 # Only look one level deep inside the roles directory
+          register: all_roles_found
+          delegate_to: localhost # Run the find module on the Ansible control node
+          run_once: true         # Only run this find operation once
+
+        - name: Debug all found roles
+          ansible.builtin.debug:
+            var: all_roles_found.files | json_query('[].path')
+
+        - name: Include all roles found for GUI systems
+          ansible.builtin.include_role:
+            name: "{{ item.path | basename }}" # Extract just the role name from the path
+          loop: "{{ all_roles_found.files }}"
+      when: ansible_local.system_type.system_type.type == 'gui'
+
