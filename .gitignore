@@ -6,7 +6,7 @@ ansible.cfg
 */config.def.h.rej
 */dwm.c.orig
 */dwm.c.rej
-*/dwm
+*/dwm/dwm
 */slstatus/slstatus
 
 # Prerequisites
