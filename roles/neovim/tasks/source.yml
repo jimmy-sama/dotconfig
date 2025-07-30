@@ -21,7 +21,7 @@
         state: latest
       when: ansible_distribution == "Debian"
 
-    - name: Install Fedora build dependencies.
+    - name: Install RedHat build dependencies.
       become: true
       ansible.builtin.dnf:
         name:
@@ -35,11 +35,11 @@
           - unzip
           - glibc-gconv-extra
         state: latest
-      when: ansible_distribution == 'Fedora'
+      when: ansible_os_family == 'RedHat'
 
     - name: Install openSuse build dependencies.
       become: true
-      ansible.builtin.zypper:
+      community.general.zypper:
         name:
           - cmake
           - curl
@@ -50,31 +50,44 @@
         state: latest
       when: ansible_distribution == 'openSuse'
 
-    - name: Check the latest release against installed neovim version
-      ansible.builtin.script:
-        cmd: library/need_neovim_upgrade.py
-        executable: /usr/bin/python
-      register: need_upgrade
+    - name: Install Python-pip
+      ansible.builtin.package:
+        name: python3-pip
+        state: present
+      become: true
 
-- block:
-  - name: Clone the repo
-    ansible.builtin.git:
-      repo: "https://github.com/neovim/neovim"
-      dest: /tmp/neovim
-      single_branch: yes
-      version: stable
+    - name: Ensure python-requests is installed
+      ansible.builtin.pip:
+        name: requests
+        state: present
+      become: true
 
-  - name: Build neovim from stable source
-    become: true
-    community.general.make:
-      chdir: /tmp/neovim
-      target: install
-      params:
-        CMAKE_BUILD_TYPE: RelWithDebInfo
+- name: Compare current installed version against latest stable
+  ansible.builtin.script:
+    cmd: library/need_neovim_upgrade.py
+    executable: /usr/bin/python
+  register: need_upgrade
 
-  - name: remove dir
-    become: true
-    ansible.builtin.file:
-      path: /tmp/neovim
-      state: absent
-  when: need_upgrade.stdout == "needUpgrade\n" 
+- name: Build from source if there is a new stable version
+  block:
+    - name: Clone the repo
+      ansible.builtin.git:
+        repo: "https://github.com/neovim/neovim"
+        dest: /tmp/neovim
+        single_branch: yes
+        version: stable
+
+    - name: Build neovim from stable source
+      become: true
+      community.general.make:
+        chdir: /tmp/neovim
+        target: install
+        params:
+          CMAKE_BUILD_TYPE: RelWithDebInfo
+
+    - name: remove dir
+      become: true
+      ansible.builtin.file:
+        path: /tmp/neovim
+        state: absent
+  when: need_upgrade.stdout | trim == 'needUpgrade' 

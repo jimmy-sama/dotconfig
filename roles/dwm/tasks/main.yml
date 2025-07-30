@@ -1,10 +1,22 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # tasks file for roles/slstatus
+
+- name: Install dependencies
+  become: true
+  ansible.builtin.package:
+    name:
+      - i3lock
+      - flameshot
+      - gimp
+      - ghostty
+    state: present
+
 - name: copy config files
   ansible.builtin.copy:
     src: files/
     dest: "{{ ansible_user_dir }}/.config/dwm"
+  register: copy_dwm
 
 - name: slstatus configuration file
   template:
@@ -13,15 +25,18 @@
     mode: 0755
     owner: "{{ ansible_user_id }}"
     group: "{{ ansible_user_id }}"
+  register: slstatus_template
 
 - name: Run 'install' target as root on dwm
   community.general.make:
     chdir: "{{ ansible_user_dir }}/.config/dwm"
     target: install
   become: true
+  when: copy_dwm.changed
 
 - name: Run 'install' target as root on slstatus
   community.general.make:
     chdir: "{{ ansible_user_dir }}/.config/dwm/slstatus"
     target: install
   become: true
+  when: slstatus_template.changed

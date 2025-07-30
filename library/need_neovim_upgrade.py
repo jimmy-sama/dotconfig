@@ -10,7 +10,7 @@ def get_latest_github_release():
     url = f"https://api.github.com/repos/{repo_owner}/{repo}/releases/latest"
     try:
         response = requests.get(url)
-    except requests.exceptions.RequestException as e:  # This is the correct syntax
+    except requests.exceptions.RequestException as e:
         raise sys.exit(e)
 
     tag_name = response.json()["tag_name"]

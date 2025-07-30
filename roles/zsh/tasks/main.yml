@@ -38,6 +38,7 @@
     owner: "{{ ansible_user_id }}"
     group: "{{ ansible_user_id }}"
     state: link
+    force: true
 
 - name: Link custom files from defaults dictionary
   ansible.builtin.file:
