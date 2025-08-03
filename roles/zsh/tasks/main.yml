@@ -9,11 +9,13 @@
       - git
       - curl
     state: present
+  become: true
 
 - name: Change default shell to zsh
   ansible.builtin.user:
     name: "{{ ansible_user_id }}"
     shell: /usr/bin/zsh
+  become: true
 
 - name: Check if Oh my zsh exists
   ansible.builtin.stat:

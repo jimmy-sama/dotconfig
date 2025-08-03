@@ -7,20 +7,6 @@
         name: neovim
         state: absent
 
-    - name: Install Debian build dependencies.
-      become: true
-      ansible.builtin.apt:
-        name:
-          - cmake
-          - curl
-          - gettext
-          - git
-          - ninja-build
-          - unzip
-          - build-essentials
-        state: latest
-      when: ansible_distribution == "Debian"
-
     - name: Install RedHat build dependencies.
       become: true
       ansible.builtin.dnf:
@@ -36,23 +22,23 @@
           - glibc-gconv-extra
         state: latest
       when: ansible_os_family == 'RedHat'
-
-    - name: Install openSuse build dependencies.
+      
+    - name: Install Arch build dependencies.
       become: true
-      community.general.zypper:
+      community.general.pacman:
         name:
+          - base-devel
           - cmake
-          - curl
-          - gcc-c++
-          - gettext-tools
-          - git
           - ninja
+          - curl
         state: latest
-      when: ansible_distribution == 'openSuse'
+      when: ansible_os_family == 'Archlinux'
 
     - name: Install Python-pip
       ansible.builtin.package:
-        name: python3-pip
+        name: 
+          - python-pip
+          - python-virtualenv
         state: present
       become: true
 
@@ -60,12 +46,13 @@
       ansible.builtin.pip:
         name: requests
         state: present
+        virtualenv: /tmp/.venv
       become: true
 
 - name: Compare current installed version against latest stable
   ansible.builtin.script:
     cmd: library/need_neovim_upgrade.py
-    executable: /usr/bin/python
+    executable: /tmp/.venv/bin/python
   register: need_upgrade
 
 - name: Build from source if there is a new stable version

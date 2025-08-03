@@ -6,10 +6,12 @@
   become: true
   ansible.builtin.package:
     name:
+      - brightnessctl
       - i3lock
       - flameshot
       - gimp
       - ghostty
+      - picom
     state: present
 
 - name: copy config files
