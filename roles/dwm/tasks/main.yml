@@ -6,6 +6,7 @@
   become: true
   ansible.builtin.package:
     name:
+      - feh
       - brightnessctl
       - i3lock
       - flameshot
