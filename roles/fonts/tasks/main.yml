@@ -1,6 +1,13 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # tasks file for roles/fonts
+- name: Install Dependencies
+  ansible.builtin.package:
+    name:
+      - fontconfig
+      - unzip
+  become: true
+
 - name: simple kanji support
   become: true
   block:
