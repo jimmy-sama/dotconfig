@@ -2,6 +2,14 @@
 - name: "Built Neovim from Source"
   ansible.builtin.include_tasks: "source.yml"
 
+- name: "Install Dependencies"
+  ansible.builtin.package:
+    name:
+      - xclip
+      - python-lsp-server
+      - lua-language-server
+  become: true
+
 - name: "Neovim | Config folder"
   ansible.builtin.file:
     mode: "0755"
