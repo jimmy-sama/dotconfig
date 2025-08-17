@@ -1,0 +1,20 @@
+#SPDX-License-Identifier: MIT-0
+---
+- name: Check for paru build requirements
+  community.general.pacman:
+    name: base-devel
+    state: present
+
+- name: Git checkout of paru repo
+  ansible.builtin.git:
+    repo: 'https://aur.archlinux.org/paru.git'
+    dest: /tmp/paruRepo
+
+- name: Build paru
+  ansible.builtin.command: 
+    argv:
+      - /usr/bin/makepkg 
+      - -si
+  args:
+    chdir: /tmp/paruRepo/
+    
