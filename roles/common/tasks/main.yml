@@ -7,5 +7,6 @@
       - polkit
       - openssh
       - btop
+      - man-db
     state: present
   become: true
