@@ -8,6 +8,8 @@
       - xclip
       - python-lsp-server
       - lua-language-server
+      - tree-sitter-cli
+      - nodejs
   become: true
 
 - name: "Neovim | Config folder"
