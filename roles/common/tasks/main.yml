@@ -8,5 +8,6 @@
       - openssh
       - btop
       - man-db
+      - which
     state: present
   become: true
