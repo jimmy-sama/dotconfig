@@ -37,7 +37,7 @@
   ansible.builtin.file:
     src: "{{ role_path }}/files/zshrc"
     dest: "{{ ansible_env.HOME }}/.zshrc"
-    owner: "{{ ansible_user_id }}"
+    owner: "{{ ansible_user_id }}" 
     group: "{{ ansible_user_id }}"
     state: link
     force: true
