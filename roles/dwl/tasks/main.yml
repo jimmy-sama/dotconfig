@@ -7,18 +7,20 @@
     name:
       - wayland
       - wayland-protocols
+      - wlroots0.18
       - libxkbcommon
       - pkgconfig
       - mesa
       - libdrm
       - libinput
+      - wmenu
     state: present
   become: true
 
 - name: Install wlroots with paru
   kewlfft.aur.aur:
     name: wlroots-asan-git
-    state: present
+    state: absent
   become: true
   become_user: aur_builder
   
