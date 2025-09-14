@@ -1,0 +1,24 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/dwl
+
+- name: Install Dependencies for dwl
+  community.general.pacman:
+    name:
+      - wayland
+      - wayland-protocols
+      - libxkbcommon
+      - pkgconfig
+      - mesa
+      - libdrm
+      - libinput
+    state: present
+  become: true
+
+- name: Install wlroots with paru
+  kewlfft.aur.aur:
+    name: wlroots-asan-git
+    state: present
+  become: true
+  become_user: aur_builder
+  
