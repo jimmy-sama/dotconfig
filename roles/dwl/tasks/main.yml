@@ -57,7 +57,7 @@
     src: "{{ item }}"
     dest: ~/.config/waybar
   with_fileglob:
-    - "waybar/"
+    - "files/waybar/*"
 
 - name: Copy hyprpaper config
   ansible.builtin.copy:
