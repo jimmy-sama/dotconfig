@@ -65,7 +65,7 @@ installDepend() {
 
     if ! command_exists paru; then
 	printf "%b\n" "${YELLOW}Installing paru as AUR helper...${RC}"
-	cd /opt && "$ESCALATION_TOOL" git clone https://aur.archlinux.org/paru.git && "$ESCALATION_TOOL" chown -R "$USER": ./paru
+	cd /opt && "$SUDO_CMD" git clone https://aur.archlinux.org/paru.git && "$SUDO_CMD" chown -R "$USER": ./paru
 	cd paru && makepkg --noconfirm -si
 	printf "%b\n" "${GREEN}Paru installed${RC}"
     else
