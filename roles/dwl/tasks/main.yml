@@ -2,7 +2,7 @@
 ---
 # tasks file for roles/dwl
 
-- name: Install Dependencies for dwl
+- name: Install Dependencies for building dwl
   community.general.pacman:
     name:
       - wayland
@@ -13,7 +13,17 @@
       - mesa
       - libdrm
       - libinput
-      - wmenu
     state: present
   become: true
 
+- name: Install Dependencies for using my dwl setup
+  community.general.pacman:
+    name:
+      - waybar
+      - ghostty
+      - flameshot
+      - wireplumber
+      - brightnessctl
+      - gimp
+    state: present
+  become: true
