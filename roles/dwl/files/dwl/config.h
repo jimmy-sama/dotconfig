@@ -58,7 +58,7 @@ static const struct xkb_rule_names xkb_rules = {
 	.options = "ctrl:nocaps",
 	*/
 	.layout = "de,us",
-	.variant = ",intl"
+	.variant = ",intl",
 	.options = "grp:win_space_toggle",
 };
 
