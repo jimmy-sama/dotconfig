@@ -17,10 +17,3 @@
     state: present
   become: true
 
-- name: Install wlroots with paru
-  kewlfft.aur.aur:
-    name: wlroots-asan-git
-    state: absent
-  become: true
-  become_user: aur_builder
-  
