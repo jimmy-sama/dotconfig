@@ -30,3 +30,31 @@
       - gimp
     state: present
   become: true
+
+- name: Create the Wallpaper directory
+  ansible.builtin.file:
+    path: ~/Pictures/Wallpaper
+    state: directory
+
+- name: Create the wayland-sessions directory
+  ansible.builtin.file:
+    path: /usr/share/wayland-sessions
+    state: directory
+  become: true
+
+- name: Copy the wallpaper files to the directory
+  ansible.builtin.copy:
+    src: wallpaper/purple.jpg
+    dest: ~/Pictures/Wallpaper/
+
+- name: Copy dwlStartup script to $HOME
+  ansible.builtin.copy:
+    src: dwl/dwlStartup.sh
+    dest: ~/dwlStartup.sh
+    mode: 0755
+
+- name: Copy dwl desktop entry
+  ansible.builtin.copy:
+    src: dwl/dwl.desktop
+    dest: /usr/share/wayland-sessions
+  become: true
