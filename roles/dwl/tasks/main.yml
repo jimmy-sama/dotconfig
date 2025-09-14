@@ -20,6 +20,9 @@
   community.general.pacman:
     name:
       - waybar
+      - hyprpaper
+      - hyprlock
+      - dunst
       - ghostty
       - flameshot
       - wireplumber
