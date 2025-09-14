@@ -8,7 +8,7 @@ for _prs in $_ps; do
     fi
  done
 
+swaybg --output '*' --mode center  --image ~/Pictures/Wallpaper/purple.jpg
 dunst &
-hyprpaper &
 waybar &
 
