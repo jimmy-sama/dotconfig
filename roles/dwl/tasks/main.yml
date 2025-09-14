@@ -42,6 +42,28 @@
     state: directory
   become: true
 
+- name: Create hypr-tools directory
+  ansible.builtin.file:
+    path: ~/.config/hypr
+    state: directory
+
+- name: Create waybar config directory
+  ansible.builtin.file:
+    path: ~/.config/waybar
+    state: directory
+
+- name: Copy waybar config
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: ~/.config/waybar
+  with_fileglob:
+    - "waybar/"
+
+- name: Copy hyprpaper config
+  ansible.builtin.copy:
+    src: wallpaper/hyprpaper.conf
+    dest: ~/.config/hypr/hyprpaper.conf
+
 - name: Copy the wallpaper files to the directory
   ansible.builtin.copy:
     src: wallpaper/purple.jpg

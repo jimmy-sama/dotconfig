@@ -9,5 +9,6 @@ for _prs in $_ps; do
  done
 
 dunst &
+hyprpaper &
 waybar &
 
