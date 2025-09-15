@@ -20,6 +20,7 @@
   community.general.pacman:
     name:
       - waybar
+      - wmenu
       - swaybg
       - dunst
       - ghostty
