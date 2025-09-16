@@ -6,6 +6,9 @@
   become: true
   ansible.builtin.package:
     name:
+      - xorg
+      - polkit
+      - mate-polkit
       - feh
       - wireplumber
       - brightnessctl
