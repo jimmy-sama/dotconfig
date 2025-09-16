@@ -1,74 +1,12 @@
 ---
-- name: Deployment of Custom Facts
+- name: Configure my Arch-System
   hosts: localhost
   connection: local
-  become: true
-
   tasks:
-    - name: Ensure /etc/ansible/facts.d directory exists
-      ansible.builtin.file:
-        path: /etc/ansible/facts.d
-        state: directory
-        mode: '0755'
-        owner: 'root'
-        group: 'root'
-    
-    - name: Deploy the system_type.fact script
-      ansible.builtin.copy:
-        src: files/system_type.fact
-        dest: /etc/ansible/facts.d/system_type.fact
-        mode: '0755'
-        owner: 'root'
-        group: 'root'
-
-    - name: Explicitly re-gather facts AFTER custom fact deployment
-      ansible.builtin.setup:
-        # No arguments needed, just re-run the fact gathering process
-      # This task MUST run after the 'copy' task to pick up the new fact.
-
-- name: Configure the System Based on Custom Facts
-  hosts: localhost
-  connection: local
-  become: true
-
-  tasks:
-    - name: Gather facts (including custom facts)
-      ansible.builtin.setup: # The 'setup' module is used for fact gathering
-
-    - name: Configure system based on type
-      ansible.builtin.debug:
-        msg: "System type detected: {{ ansible_local.system_type.system_type.type }}"
-      when: ansible_local.system_type.system_type is defined
-
-    - name: Configure CLI System
-      block:
-        - name: Include CLI specific roles if it's a CLI system
-          ansible.builtin.include_role:
-            name: "{{ item }}"
-          loop:
-            - neovim
-            - zsh
-      when: ansible_local.system_type.system_type.type == 'cli'
-
-    - name: Configure GUI System
-      block:
-
-        - name: Find all roles in the 'roles' directory
-          ansible.builtin.find:
-            paths: ./roles/ # Search in the roles directory relative to the playbook
-            file_type: directory
-            depth: 1 # Only look one level deep inside the roles directory
-          register: all_roles_found
-          delegate_to: localhost # Run the find module on the Ansible control node
-          run_once: true         # Only run this find operation once
-
-        - name: Debug all found roles
-          ansible.builtin.debug:
-            var: all_roles_found.files | json_query('[].path')
-
-        - name: Include all roles found for GUI systems
-          ansible.builtin.include_role:
-            name: "{{ item.path | basename }}" # Extract just the role name from the path
-          loop: "{{ all_roles_found.files }}"
-      when: ansible_local.system_type.system_type.type == 'gui'
-
+    - name: Include "it worked on my machine" roles
+      ansible.builtin.include_role:
+        name: "{{ item }}"
+      loop:
+        - dwm
+        - neovim
+        - terminal
