@@ -62,3 +62,9 @@
     target: install
   become: true
   when: slstatus_template.changed
+
+- name: Copy .xinitrc 
+  ansible.builtin.copy:
+    src: files/.xinitrc
+    dest: "{{ ansible_user_dir }}/.xinitrc"
+    mode: 0755
