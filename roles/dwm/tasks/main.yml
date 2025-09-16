@@ -21,7 +21,7 @@
     path: ~/Pictures/Wallpaper
     state: directory
 
-- name: Copy waybar config
+- name: Copy Wallpapers
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: ~/Pictures/Wallpaper
@@ -30,13 +30,13 @@
 
 - name: Copy dwm source files
   ansible.builtin.copy:
-    src: files/dwm
+    src: files/dwm/
     dest: "{{ ansible_user_dir }}/.config/dwm"
   register: copy_dwm
 
 - name: Copy slstatus source files
   ansible.builtin.copy:
-    src: files/slstatus
+    src: files/slstatus/
     dest: "{{ ansible_user_dir }}/.config/slstatus"
   register: copy_slstatus
 
