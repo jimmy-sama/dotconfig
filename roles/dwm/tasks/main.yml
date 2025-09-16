@@ -16,16 +16,34 @@
       - picom
     state: present
 
-- name: copy config files
+- name: Create the Wallpaper directory
+  ansible.builtin.file:
+    path: ~/Pictures/Wallpaper
+    state: directory
+
+- name: Copy waybar config
   ansible.builtin.copy:
-    src: files/
+    src: "{{ item }}"
+    dest: ~/Pictures/Wallpaper
+  with_fileglob:
+    - "files/wallpaper/*"
+
+- name: Copy dwm source files
+  ansible.builtin.copy:
+    src: files/dwm
     dest: "{{ ansible_user_dir }}/.config/dwm"
   register: copy_dwm
 
-- name: slstatus configuration file
+- name: Copy slstatus source files
+  ansible.builtin.copy:
+    src: files/slstatus
+    dest: "{{ ansible_user_dir }}/.config/slstatus"
+  register: copy_slstatus
+
+- name: Use the template slstatus configuration file
   template:
     src: templates/slstatusConfig.h.j2
-    dest: "{{ ansible_user_dir }}/.config/dwm/slstatus/config.h"
+    dest: "{{ ansible_user_dir }}/.config/slstatus/config.h"
     mode: 0755
     owner: "{{ ansible_user_id }}"
     group: "{{ ansible_user_id }}"
@@ -40,7 +58,7 @@
 
 - name: Run 'install' target as root on slstatus
   community.general.make:
-    chdir: "{{ ansible_user_dir }}/.config/dwm/slstatus"
+    chdir: "{{ ansible_user_dir }}/.config/slstatus"
     target: install
   become: true
   when: slstatus_template.changed
