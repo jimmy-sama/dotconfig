@@ -1,0 +1,11 @@
+font-family = BlexMono Nerd Font Mono
+font-size = 16
+
+theme = GruvboxDark
+
+mouse-hide-while-typing
+
+window-decoration = false
+window-theme = dark
+
+focus-follows-mouse
