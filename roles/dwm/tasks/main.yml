@@ -17,6 +17,7 @@
       - gimp
       - ghostty
       - picom
+      - imagemagick
     state: present
 
 - name: Create the Wallpaper directory
@@ -71,3 +72,22 @@
     src: files/.xinitrc
     dest: "{{ ansible_user_dir }}/.xinitrc"
     mode: 0755
+
+- name: Create the picom directory
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config/picom"
+    state: directory
+
+- name: Copy ghostty config file
+  ansible.builtin.file:
+    src: "{{ role_path }}/files/picom/picom.conf"
+    dest: "{{ ansible_user_dir }}/.config/picom/picom.conf"
+    state: link
+    force: true
+
+- name: Copy the i3lock script
+  ansible.builtin.file:
+    src: "{{ role_path }}/files/.i3lock.sh"
+    dest: "{{ ansible_user_dir }}/.i3lock.sh"
+    mode: 0744
+    state: link
