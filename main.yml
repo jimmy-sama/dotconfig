@@ -7,9 +7,7 @@
       ansible.builtin.include_role:
         name: "{{ item }}"
       loop:
-        - dwm
         - neovim
         - terminal
-        - ly
         - common
         - fonts
