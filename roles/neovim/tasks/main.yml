@@ -5,12 +5,12 @@
 - name: "Install Dependencies"
   ansible.builtin.package:
     name:
-      - xclip
       - pyright
       - lua-language-server
+      - gopls
+      - xclip
       - tree-sitter-cli
       - nodejs
-      - luarocks
       - ripgrep
       - fd
   become: true
