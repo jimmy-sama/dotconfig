@@ -11,12 +11,3 @@
     - { role: 'neovim', tags: 'neovim' }
     - { role: 'terminal', tags: 'terminal' }
 
-
-common
-dwl
-dwm
-firefox
-fonts
-ly
-neovim
-terminal
