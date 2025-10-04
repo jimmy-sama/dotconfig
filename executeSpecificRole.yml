@@ -2,4 +2,21 @@
 - hosts: localhost
   connection: local
   roles:
-    - terminal
+    - { role: 'common', tags: 'common' }
+    - { role: 'dwl', tags: 'dwl' }
+    - { role: 'dwm', tags: 'dwm' }
+    - { role: 'firefox', tags: 'firefox' }
+    - { role: 'fonts', tags: 'fonts' }
+    - { role: 'ly', tags: 'ly' }
+    - { role: 'neovim', tags: 'neovim' }
+    - { role: 'terminal', tags: 'terminal' }
+
+
+common
+dwl
+dwm
+firefox
+fonts
+ly
+neovim
+terminal

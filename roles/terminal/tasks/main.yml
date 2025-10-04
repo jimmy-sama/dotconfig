@@ -1,18 +1,18 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # tasks file for roles/terminal
-- name: Install ghostty
-  community.general.pacman:
-    name: ghostty
-    state: present
-  become: true
+# - name: Install ghostty
+#   community.general.pacman:
+#     name: ghostty
+#     state: present
+#   become: true
 
-- name: Copy ghostty config file
-  ansible.builtin.file:
-    src: "{{ role_path }}/files/ghostty/config"
-    dest: "{{ ansible_user_dir }}/.config/ghostty/config"
-    state: link
-    force: true
+# - name: Copy ghostty config file
+#   ansible.builtin.file:
+#     src: "{{ role_path }}/files/ghostty/config"
+#     dest: "{{ ansible_user_dir }}/.config/ghostty/config"
+#     state: link
+#     force: true
 
 - name: Install Batcat Application
   community.general.pacman:

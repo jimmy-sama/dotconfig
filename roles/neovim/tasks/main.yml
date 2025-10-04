@@ -6,7 +6,7 @@
   ansible.builtin.package:
     name:
       - xclip
-      - python-lsp-server
+      - pyright
       - lua-language-server
       - tree-sitter-cli
       - nodejs

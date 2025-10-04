@@ -18,19 +18,22 @@ return {
     },
     config = function()
       local capabilities = require('blink.cmp').get_lsp_capabilities()
-      require("lspconfig").lua_ls.setup {
+      vim.lsp.enable('lua_ls')
+      vim.lsp.config('lua_ls', {
         capabilities = capabilities,
         settings = {
           Lua = {
             diagnostics = { disable = { 'missing-fields' } },
           },
         },
-      }
-      require("lspconfig").pylsp.setup {
+      })
+      vim.lsp.enable('pyright')
+      vim.lsp.config('pyright', {
         capabilities = capabilities,
-      }
+      })
 
-      require("lspconfig").gopls.setup {
+      vim.lsp.enable('gopls')
+      vim.lsp.config('gopls', {
         capabilities = capabilities,
         settings = {
           gopls = {
@@ -39,7 +42,7 @@ return {
             },
           },
         },
-      }
+      })
 
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
