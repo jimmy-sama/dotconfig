@@ -1,7 +1,7 @@
 font-family = BlexMono Nerd Font Mono
 font-size = 16
 
-theme = GruvboxDark
+theme = Gruvbox Material
 
 mouse-hide-while-typing
 
