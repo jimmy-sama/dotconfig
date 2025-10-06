@@ -21,7 +21,7 @@ return {
     workspaces = {
       {
         name = "personal",
-        path = "~/workspace/github/Zettelkasten",
+        path = "~/workspace/git/hub/Zettelkasten",
       },
     },
 
