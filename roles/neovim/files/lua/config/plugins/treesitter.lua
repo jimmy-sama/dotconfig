@@ -17,10 +17,8 @@ return {
               return true
             end
           end,
-
-          additional_vim_regex_highlighting = { "ruby" },
+          additional_vim_regex_highlighting = false,
         },
-        indent = { enable = true, disable = { "ruby" } },
       }
     end,
   }
