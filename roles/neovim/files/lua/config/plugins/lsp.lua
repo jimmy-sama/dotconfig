@@ -28,9 +28,6 @@ return {
         },
       })
       vim.lsp.enable('pyright')
-      vim.lsp.config('pyright', {
-        capabilities = capabilities,
-      })
 
       vim.lsp.enable('gopls')
       vim.lsp.config('gopls', {
