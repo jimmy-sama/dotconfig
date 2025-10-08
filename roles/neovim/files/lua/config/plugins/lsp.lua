@@ -29,6 +29,8 @@ return {
       })
       vim.lsp.enable('pyright')
 
+      vim.lsp.enable('ansiblels')
+
       vim.lsp.enable('gopls')
       vim.lsp.config('gopls', {
         capabilities = capabilities,
