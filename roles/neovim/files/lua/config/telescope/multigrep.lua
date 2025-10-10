@@ -15,23 +15,46 @@ local live_multigrep = function(opts)
         return nil
       end
 
-      local pieces = vim.split(promt, "  ")
       local args = { "rg" }
-      if pieces[1] then
+
+      -- 1 ({init}) has to be given in order to pass the final "true" which tells the function to perform a plain "find substring" operation instead of pattern matching
+      if string.find(promt, " .", 1, true) and not string.find(promt, "  ", 1, true) then
+        local pieces = vim.split(promt, " .")
+        if pieces[1] then
+          table.insert(args, "-e")
+          table.insert(args, pieces[1])
+        end
+
+        if pieces[2] then
+          table.insert(args, "-g")
+          table.insert(args, "*." .. pieces[2])
+        end
+      elseif string.find(promt, "  ", 1, true) then
+        local pieces = vim.split(promt, "  ")
+        if pieces[1] then
+          table.insert(args, "-e")
+          table.insert(args, pieces[1])
+        end
+
+        if pieces[2] then
+          table.insert(args, "-g")
+          table.insert(args, pieces[2])
+        end
+      else
         table.insert(args, "-e")
-        table.insert(args, pieces[1])
+        table.insert(args, promt)
       end
 
-      if pieces[2] then
-        table.insert(args, "-g")
-        table.insert(args, pieces[2])
-      end
+      local rg_flags = {
+        "--color=never",
+        "--no-heading",
+        "--with-filename",
+        "--line-number",
+        "--column",
+        "--smart-case"
+      }
 
-      return vim.iter({
-            args,
-            { "--color=never", "--no-heading", "--with-filename", "--line-number", "--column", "--smart-case" } })
-          :flatten()
-          :totable()
+      return vim.iter({ args, rg_flags }):flatten():totable()
     end,
     entry_maker = make_entry.gen_from_vimgrep(opts),
     cwd = opts.cwd,
@@ -47,7 +70,7 @@ local live_multigrep = function(opts)
 end
 
 M.setup = function()
-  vim.keymap.set("n", "<space>fg", live_multigrep)
+  vim.keymap.set("n", "<leader>fg", live_multigrep)
 end
 
 return M

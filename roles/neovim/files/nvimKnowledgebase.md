@@ -14,5 +14,11 @@ K = shows function definition
 vim.lsp.buf.format() gets used by LSP
 .editorconfig file is used for configuring lsp formatting with for example the amount of spaces used
 
-## Telescope introduction
+## Telescope
+fzf and ripgrep has to be installed
+fzf native extension is recommended for better and faster searching
+telescope/multigrep is a 'extension' for live ripgrep searching with optional file globing
+- can be started with leader + fg
+- "  " + glob expression = can be used for regular globing
+- " ." + fileextension = filters for given file extensions
 
