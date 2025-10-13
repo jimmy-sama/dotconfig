@@ -5,6 +5,7 @@
 - name: "Install Dependencies"
   ansible.builtin.package:
     name:
+      - clang
       - pyright
       - lua-language-server
       - gopls

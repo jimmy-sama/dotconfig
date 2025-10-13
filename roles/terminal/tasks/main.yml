@@ -70,14 +70,15 @@
     dest: "{{ OMZ_CUSTOM }}/plugins/{{ item.key }}"
   loop: "{{ ZSH_CUSTOM_PLUGINS | dict2items }}"
 
-- name: Link .zshrc file
-  ansible.builtin.file:
-    src: "{{ role_path }}/files/zsh/zshrc"
+- name: Use the template zshrc configuration file
+  template:
+    src: templates/zshrc.j2
     dest: "{{ ansible_env.HOME }}/.zshrc"
-    owner: "{{ ansible_user_id }}" 
+    mode: 0755
+    owner: "{{ ansible_user_id }}"
     group: "{{ ansible_user_id }}"
-    state: link
     force: true
+  register: zshrc_template
 
 - name: Link custom files from defaults dictionary
   ansible.builtin.file:
