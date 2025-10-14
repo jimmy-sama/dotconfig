@@ -44,24 +44,14 @@ local job_id = 0
 set("n", "<space>to", function()
   vim.cmd.new()
   vim.cmd.term()
-  vim.cmd.wincmd("H")
-  -- vim.api.nvim_win_set_height(0, 10)
+  vim.cmd.wincmd("J")
+  vim.api.nvim_win_set_height(0, 10)
 
   job_id = vim.bo.channel
 end)
 
-set("n", "<space>tc", function()
-  -- go build, go test ./someFile
-  vim.fn.chansend(job_id, { "ls -lA\r\n" })
-end)
-
-local current_command = ""
-set("n", "<space>tr", function()
-  if current_command == "" then
-    current_command = vim.fn.input("Command: ")
-  end
-
-  vim.fn.chansend(job_id, { current_command .. "\r\n" })
+set("n", "<space>ef", function()
+  vim.fn.chansend(job_id, { string.format('python %s\r\n', vim.fn.expand('%')) })
 end)
 
 set("n", "-", "<cmd>Oil<CR>")
