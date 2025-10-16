@@ -1,7 +1,8 @@
 # To temporarily bypass an alias, we precede the command with a \
 alias vim='nvim'
 alias vi='nvim'
-alias aon='NVIM_APPNAME=aon nvim'
+alias dot='cd ~/workspace/git/hub/dotconfig/'
+alias ndot='cd ~/workspace/git/hub/dotconfig/roles/neovim/files/'
 
 alias cat='bat'
 
