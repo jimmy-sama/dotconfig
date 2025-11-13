@@ -7,6 +7,7 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.conceallevel = 1
+vim.opt.signcolumn = "yes:1"
 
 local set = vim.keymap.set
 
