@@ -1,4 +1,4 @@
-{% if  ansible_virtualization_type == "wsl" %}
+{% if  ansible_facts['virtualization_type'] == "wsl" %}
 eval "$(/usr/sbin/wsl2-ssh-agent)"
 {% else %}
 eval "$(/usr/sbin/ssh-agent)"
@@ -80,3 +80,5 @@ export ARCHFLAGS="-arch $(uname -m)"
 # plugins, and themes. Aliases can be placed here, though Oh My Zsh
 # users are encouraged to define aliases within a top-level file in
 # the $ZSH_CUSTOM folder, with .zsh extension.
+
+eval "$(zoxide init zsh)"
