@@ -35,19 +35,19 @@
 - name: Copy dwm source files
   ansible.builtin.copy:
     src: files/dwm/
-    dest: "{{ ansible_user_dir }}/.config/dwm"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/dwm"
   register: copy_dwm
 
 - name: Copy slstatus source files
   ansible.builtin.copy:
     src: files/slstatus/
-    dest: "{{ ansible_user_dir }}/.config/slstatus"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/slstatus"
   register: copy_slstatus
 
 - name: Use the template slstatus configuration file
   template:
     src: templates/slstatusConfig.h.j2
-    dest: "{{ ansible_user_dir }}/.config/slstatus/config.h"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/slstatus/config.h"
     mode: 0755
     owner: "{{ ansible_user_id }}"
     group: "{{ ansible_user_id }}"
@@ -55,14 +55,14 @@
 
 - name: Run 'install' target as root on dwm
   community.general.make:
-    chdir: "{{ ansible_user_dir }}/.config/dwm"
+    chdir: "{{ ansible_facts['user_dir'] }}/.config/dwm"
     target: install
   become: true
   when: copy_dwm.changed
 
 - name: Run 'install' target as root on slstatus
   community.general.make:
-    chdir: "{{ ansible_user_dir }}/.config/slstatus"
+    chdir: "{{ ansible_facts['user_dir'] }}/.config/slstatus"
     target: install
   become: true
   when: slstatus_template.changed
@@ -70,24 +70,24 @@
 - name: Copy .xinitrc 
   ansible.builtin.copy:
     src: files/.xinitrc
-    dest: "{{ ansible_user_dir }}/.xinitrc"
+    dest: "{{ ansible_facts['user_dir'] }}/.xinitrc"
     mode: 0755
 
 - name: Create the picom directory
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.config/picom"
+    path: "{{ ansible_facts['user_dir'] }}/.config/picom"
     state: directory
 
 - name: Copy ghostty config file
   ansible.builtin.file:
     src: "{{ role_path }}/files/picom/picom.conf"
-    dest: "{{ ansible_user_dir }}/.config/picom/picom.conf"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/picom/picom.conf"
     state: link
     force: true
 
 - name: Copy the i3lock script
   ansible.builtin.file:
     src: "{{ role_path }}/files/.i3lock.sh"
-    dest: "{{ ansible_user_dir }}/.i3lock.sh"
+    dest: "{{ ansible_facts['user_dir'] }}/.i3lock.sh"
     mode: 0744
     state: link
