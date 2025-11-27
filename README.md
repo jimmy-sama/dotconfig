@@ -7,5 +7,5 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/jimmy-sama/dotconfig/ref
 
 ## Execute a specific role with tags
 ```bash
-ansible-playbook example.yml --tags "configuration,packages"
+ansible-playbook example.yml --tags "terminal,neovim"
 ```
