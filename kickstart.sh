@@ -63,26 +63,27 @@ installDepend() {
 
     ${SUDO_CMD} ${PACKAGER} -S ${DEPENDENCIES} --needed --noconfirm
 
-    if ! command_exists paru; then
-	printf "%b\n" "${YELLOW}Installing paru as AUR helper...${RC}"
-	cd /opt && "$SUDO_CMD" git clone https://aur.archlinux.org/paru.git && "$SUDO_CMD" chown -R "$USER": ./paru
-	cd paru && makepkg --noconfirm -si
-	printf "%b\n" "${GREEN}Paru installed${RC}"
-	cd ~/
-    else
-	printf "%b\n" "${GREEN}Paru already installed${RC}"
+    if [ "$PACKAGER" = "pacman" ]; then
+	if ! command_exists paru; then
+	    printf "%b\n" "${YELLOW}Installing paru as AUR helper...${RC}"
+	    cd /opt && "$SUDO_CMD" git clone https://aur.archlinux.org/paru.git && "$SUDO_CMD" chown -R "$USER": ./paru
+	    cd paru && makepkg --noconfirm -si
+	    printf "%b\n" "${GREEN}Paru installed${RC}"
+	    cd ~/
+	else
+	    printf "%b\n" "${GREEN}Paru already installed${RC}"
+	fi
+	ansible-galaxy collection install kewlfft.aur
     fi
 
-    echo "Installing Ansible-Collections..."
-
     ansible-galaxy collection install community.general
-    ansible-galaxy collection install kewlfft.aur
 }
 
 startAnsible() {
-    echo "Cloning dotconfig repository into: $HOME/configManager"
-    mkdir -p "$HOME/workspace/git/hub"
-    git clone https://github.com/jimmy-sama/dotconfig "$HOME/configManager"
+    REPOLOCATION="$HOME/workspace/git/hub" 
+    echo "Cloning dotconfig repository into: $REPOLOCATION"
+    mkdir -p $REPOLOCATION
+    git clone https://github.com/jimmy-sama/dotconfig $REPOLOCATION
     if [ $? -eq 0 ]; then
 	echo "Successfully cloned dotconfig repository"
     else
@@ -90,7 +91,8 @@ startAnsible() {
 	exit 1
     fi
 
-    echo "Here should start the ansible playbook if it is in a usable state"
+    cd "$REPOLOCATION/dotconfig"
+    ansible-playbook main.yml -K
 }
 
 checkEnv
