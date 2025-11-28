@@ -68,6 +68,7 @@ installDepend() {
 	cd /opt && "$SUDO_CMD" git clone https://aur.archlinux.org/paru.git && "$SUDO_CMD" chown -R "$USER": ./paru
 	cd paru && makepkg --noconfirm -si
 	printf "%b\n" "${GREEN}Paru installed${RC}"
+	cd ~/
     else
 	printf "%b\n" "${GREEN}Paru already installed${RC}"
     fi
@@ -80,6 +81,7 @@ installDepend() {
 
 startAnsible() {
     echo "Cloning dotconfig repository into: $HOME/configManager"
+    mkdir -p "$HOME/workspace/git/hub"
     git clone https://github.com/jimmy-sama/dotconfig "$HOME/configManager"
     if [ $? -eq 0 ]; then
 	echo "Successfully cloned dotconfig repository"
