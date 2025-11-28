@@ -11,3 +11,13 @@
         - terminal
         - common
         - fonts
+
+    - name: Include roles for Desktop Systems
+      ansible.builtin.include_role:
+        name: "{{ item }}"
+      loop:
+        - dwm
+        - firefox
+      when:
+        - ansible_facts['form_factor'] == Desktop
+        - ansible_facts['form_factor'] == Notebook
