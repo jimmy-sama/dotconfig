@@ -20,8 +20,21 @@
           - ninja-build
           - unzip
           - glibc-gconv-extra
-        state: latest
+        state: present
       when: ansible_facts['os_family'] == 'RedHat'
+
+    - name: Install Debian build dependencies.
+      become: true
+      ansible.builtin.dnf:
+        name:
+          - ninja-build
+          - gettext
+          - cmake
+          - curl
+          - build-essential
+          - git
+        state: present
+      when: ansible_facts['os_family'] == 'Debian'
       
     - name: Install Arch build dependencies.
       become: true
@@ -31,7 +44,7 @@
           - cmake
           - ninja
           - curl
-        state: latest
+        state: present
       when: ansible_facts['os_family'] == 'Archlinux'
 
     - name: Install Python-pip
