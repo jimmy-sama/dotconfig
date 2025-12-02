@@ -8,6 +8,7 @@
       - clang
       - pyright
       - lua-language-server
+      - bash-language-server
       - gopls
       - xclip
       - tree-sitter-cli
