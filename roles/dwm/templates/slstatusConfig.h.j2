@@ -13,7 +13,9 @@ static const struct arg args[] = {
     /* function format          argument */
 {% if ansible_facts['form_factor'] == "Notebook" %}
     { battery_state, "%s",      "BAT0" },
-    { battery_perc, " %s%% ",       "BAT0" },
+    { battery_perc, " %s%%  |  ",       "BAT0" },
 {% endif %}
-    { datetime, " | %s",         "%F %T" },
+    { datetime, "%s, ",         "%a" },
+    { datetime, "%s  ",         "%b %d" },
+    { datetime, "%s",         "%R" },
 };

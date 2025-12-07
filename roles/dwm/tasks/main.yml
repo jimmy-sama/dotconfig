@@ -49,8 +49,8 @@
     src: templates/slstatusConfig.h.j2
     dest: "{{ ansible_facts['user_dir'] }}/.config/slstatus/config.h"
     mode: 0755
-    owner: "{{ ansible_user_id }}"
-    group: "{{ ansible_user_id }}"
+    owner: "{{ ansible_facts['user_id'] }}"
+    group: "{{ ansible_facts['user_id'] }}"
   register: slstatus_template
 
 - name: Run 'install' target as root on dwm
