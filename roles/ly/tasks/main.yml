@@ -5,9 +5,14 @@
     state: present
   become: true
 
-- name: "Enable the systemd service"
+- name: "Enable the ly systemd service"
   ansible.builtin.systemd_service:
-    name: ly
+    name: ly@tty2
     enabled: true
   become: true
 
+- name: "Disable the getty systemd service"
+  ansible.builtin.systemd_service:
+    name: getty@tty2
+    enabled: true
+  become: true
