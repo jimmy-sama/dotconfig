@@ -29,7 +29,7 @@ require("lazy").setup({
     { "ellisonleao/gruvbox.nvim", config = function() vim.cmd.colorscheme "gruvbox" end },
     -- { "folke/tokyonight.nvim",  config = function() vim.cmd.colorscheme "tokyonight" end },
     -- import your plugins
-    { import = "config.plugins" },
+    { import = "plugins" },
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
