@@ -3,7 +3,6 @@
   connection: local
   roles:
     - { role: 'common', tags: 'common' }
-    - { role: 'dwl', tags: 'dwl' }
     - { role: 'dwm', tags: 'dwm' }
     - { role: 'firefox', tags: 'firefox' }
     - { role: 'fonts', tags: 'fonts' }
