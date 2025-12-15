@@ -83,7 +83,7 @@ startAnsible() {
     REPOLOCATION="$HOME/workspace/git/hub" 
     echo "Cloning dotconfig repository into: $REPOLOCATION"
     mkdir -p $REPOLOCATION
-    git clone https://github.com/jimmy-sama/dotconfig $REPOLOCATION
+    git clone https://github.com/jimmy-sama/dotconfig "$REPOLOCATION/dotconfig"
     if [ $? -eq 0 ]; then
 	echo "Successfully cloned dotconfig repository"
     else
