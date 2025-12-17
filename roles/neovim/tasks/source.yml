@@ -17,7 +17,6 @@
       community.general.dnf_config_manager:
         name:
           - crb
-          - epel
         state: enabled
 
     - name: Install packages using dnf 
