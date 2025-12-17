@@ -35,7 +35,6 @@
           
           # For working with python
           - python3-pip
-          - python3-venv
         state: present
   when: ansible_facts['os_family'] == 'RedHat'
 
@@ -53,7 +52,7 @@
 
       # For working with python
       - python3-pip
-      - python3-venv
+      - python3-virtualenv
     state: present
   when: ansible_facts['os_family'] == 'Debian'
   
