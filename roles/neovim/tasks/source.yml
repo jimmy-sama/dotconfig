@@ -11,6 +11,7 @@
       become: true
       ansible.builtin.dnf:
         name:
+          # For building neovim from source
           - cmake
           - curl
           - gcc
@@ -20,19 +21,28 @@
           - ninja-build
           - unzip
           - glibc-gconv-extra
+          
+          # For working with python
+          - python3-pip
+          - python3-venv
         state: present
       when: ansible_facts['os_family'] == 'RedHat'
 
     - name: Install Debian build dependencies.
       become: true
-      ansible.builtin.dnf:
+      ansible.builtin.apt:
         name:
+          # For building neovim from source
           - ninja-build
           - gettext
           - cmake
           - curl
           - build-essential
           - git
+
+          # For working with python
+          - python3-pip
+          - python3-venv
         state: present
       when: ansible_facts['os_family'] == 'Debian'
       
@@ -40,20 +50,13 @@
       become: true
       community.general.pacman:
         name:
+          # For building neovim from source
           - base-devel
           - cmake
           - ninja
           - curl
         state: present
       when: ansible_facts['os_family'] == 'Archlinux'
-
-    - name: Install Python-pip
-      ansible.builtin.package:
-        name: 
-          - python-pip
-          - python-virtualenv
-        state: present
-      become: true
 
     - name: Ensure python-requests is installed
       ansible.builtin.pip:
