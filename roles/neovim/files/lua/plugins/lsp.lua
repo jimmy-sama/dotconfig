@@ -32,18 +32,6 @@ return {
       vim.lsp.enable('ansiblels')
       vim.lsp.enable('bashls')
 
-      vim.lsp.enable('gopls')
-      vim.lsp.config('gopls', {
-        capabilities = capabilities,
-        settings = {
-          gopls = {
-            analyses = {
-              unusedparams = true,
-            },
-          },
-        },
-      })
-
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
           local client = vim.lsp.get_client_by_id(args.data.client_id)

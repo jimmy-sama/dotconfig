@@ -1,0 +1,70 @@
+#SPDX-License-Identifier: MIT-0
+---
+archlinux_build_requirements:
+  # For building neovim from source
+  - base-devel
+  - cmake
+  - ninja
+  - curl
+
+  # For working with python (pip get's installed in the python package)
+  - python
+  - python-virtualenv
+
+archlinux_additional_packages:
+  # lsp support
+  - clang
+  - pyright
+  - lua-language-server
+  - bash-language-server
+
+  # for clipboard
+  - xclip
+
+  # treesitter requirements
+  - tree-sitter-cli
+  - nodejs
+
+  # telescope requirements
+  - fzf
+  - ripgrep
+  - fd
+
+debian_build_requirements:
+  # For building neovim from source
+  - ninja-build
+  - gettext
+  - cmake
+  - curl
+  - build-essential
+  - git
+
+  # For working with python
+  - python3-pip
+  - python3-virtualenv
+
+debian_additional_packages:
+  # lsp support
+  - clang
+  # pyright and bash-language-server get's installed using npm
+  # lua_ls has a play to install it
+
+  # for clipboard
+  - xclip
+
+  # treesitter requirements
+  - tree-sitter-cli
+  - nodejs
+
+  # telescope requirements
+  - fzf
+  - ripgrep
+  - fd-find
+
+# Lua Language Server variables
+lua_ls_method: binary
+lua_ls_version: "3.16.2"
+lua_ls_install_dir: /opt/lua-language-server
+lua_ls_bin_path: /usr/local/bin/lua-language-server
+lua_ls_binary_url: https://github.com/LuaLS/lua-language-server/releases/download/{{ lua_ls_version }}/lua-language-server-{{ lua_ls_version }}-linux-x64.tar.gz
+

@@ -1,0 +1,32 @@
+---
+- name: Install Debian build dependencies.
+  become: true
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ debian_build_requirements }}"
+
+- name: Install Debian additional packages
+  become: true
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ debian_additional_packages }}"
+
+- name: Install lua-language-server with the dedicated play
+  ansible.builtin.include_tasks: "lua_ls.yml"
+
+- name: Install nodejs and npm
+  become: true
+  ansible.builtin.apt:
+    name:
+      - nodejs
+      - npm
+    state: present
+
+- name: Install (or upgrade) pyright and bash-language-server globally using npm
+  become: true
+  community.general.npm:
+    name: pyright
+    global: yes
+    state: latest

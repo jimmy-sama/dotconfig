@@ -1,0 +1,14 @@
+---
+- name: Install archlinux build dependencies.
+  become: true
+  community.general.pacman:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ archlinux_build_requirements }}" 
+
+- name: Install archlinux additional packages
+  become: true
+  community.general.pacman:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ archlinux_additional_packages }}"

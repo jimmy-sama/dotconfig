@@ -1,0 +1,52 @@
+---
+- name: Using the prebuilt binarys
+  block:
+  - name: Ensure prerequisite packages are installed
+    become: true
+    ansible.builtin.apt:
+      name:
+        - curl
+        - tar
+      state: present
+      update_cache: true
+
+  - name: Create installation directory
+    become: true
+    ansible.builtin.file:
+      path: "{{ lua_ls_install_dir }}"
+      state: directory
+      mode: "0755"
+
+  - name: Download lua-language-server archive
+    ansible.builtin.get_url:
+      url: "{{ lua_ls_binary_url }}"
+      dest: "/tmp/lua-language-server-{{ lua_ls_version }}.tar.gz"
+      mode: "0644"
+    register: dl_result
+
+  - name: Extract lua-language-server archive
+    become: true
+    ansible.builtin.unarchive:
+      src: "{{ dl_result.dest }}"
+      dest: "{{ lua_ls_install_dir }}"
+      creates: "{{ lua_ls_install_dir }}/bin/lua-language-server"
+
+  - name: Symlink binary into /usr/local/bin
+    become: true
+    ansible.builtin.file:
+      src: "{{ lua_ls_install_dir }}/bin/lua-language-server"
+      dest: "{{ lua_ls_bin_path }}"
+      state: link
+      force: yes
+      mode: "0755"
+
+  - name: Verify lua-language-server works
+    ansible.builtin.command: "{{ lua_ls_bin_path }} --version"
+    register: version_output
+    changed_when: false
+
+  - name: Show installed version
+    ansible.builtin.debug:
+      msg: "lua-language-server installed – version output: {{ version_output.stdout }}"
+
+  when: lua_ls_method == "binary"

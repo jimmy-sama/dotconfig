@@ -1,21 +1,56 @@
 ---
-- name: "Built Neovim from Source"
-  ansible.builtin.include_tasks: "source.yml"
-
-- name: "Install Dependencies"
+- name: Remove existing neovim
+  become: true 
   ansible.builtin.package:
-    name:
-      - clang
-      - pyright
-      - lua-language-server
-      - bash-language-server
-      - gopls
-      - xclip
-      - tree-sitter-cli
-      - nodejs
-      - ripgrep
-      - fd
+    name: neovim
+    state: absent
+
+- name: Ensure python-requests is installed
+  ansible.builtin.pip:
+    name: requests
+    state: present
+    virtualenv: /tmp/.venv
   become: true
+
+- name: Compare current installed version against latest stable
+  ansible.builtin.script:
+    cmd: library/need_neovim_upgrade.py
+    executable: /tmp/.venv/bin/python
+  register: need_upgrade
+  changed_when: need_upgrade.stdout | trim == 'needUpgrade' 
+
+
+- name: "Install appropriate build dependencies"
+  vars:
+    os_family_playbooks:
+      Debian: debian.yml
+      RedHat: redhat.yml
+      Archlinux: archlinux.yml
+  ansible.builtin.include_tasks: "{{ os_family_playbooks[ansible_facts['os_family']] }}" 
+
+- name: Build from source if there is a new stable version
+  block:
+    - name: Clone the repo
+      ansible.builtin.git:
+        repo: "https://github.com/neovim/neovim"
+        dest: /tmp/neovim
+        single_branch: yes
+        version: stable
+
+    - name: Build neovim from stable source
+      become: true
+      community.general.make:
+        chdir: /tmp/neovim
+        target: install
+        params:
+          CMAKE_BUILD_TYPE: RelWithDebInfo
+
+    - name: remove dir
+      become: true
+      ansible.builtin.file:
+        path: /tmp/neovim
+        state: absent
+  when: need_upgrade.stdout | trim == 'needUpgrade' 
 
 - name: "Neovim | Config folder"
   ansible.builtin.file:

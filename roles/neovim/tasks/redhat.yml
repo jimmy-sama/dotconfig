@@ -1,0 +1,32 @@
+---
+- name: Install RedHat build dependencies.
+  become: true
+  block:
+    - name: Install dnf-plugins-core (provides dnf config-manager)
+      ansible.builtin.dnf:
+        name: dnf-plugins-core
+        state: present
+
+    - name: Enable CodeReady Builder and EPEL repository
+      community.general.dnf_config_manager:
+        name:
+          - crb
+        state: enabled
+
+    - name: Install packages using dnf 
+      ansible.builtin.dnf:
+        name:
+          # For building neovim from source
+          - cmake
+          - curl
+          - gcc
+          - gettext
+          - git
+          - make
+          - ninja-build
+          - unzip
+          - glibc-gconv-extra
+          
+          # For working with python
+          - python3-pip
+        state: present
