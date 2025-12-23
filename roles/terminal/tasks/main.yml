@@ -15,24 +15,11 @@
 #     force: true
 
 - name: Install newer CLI-Tools
-  community.general.pacman:
-    name:
-      - duf
-      - fd
-      - fx
-      - glow
-      - lsd
-      - ncdu
-      - tldr
-      - zoxide
-    state: present
   become: true
-
-- name: Install Batcat Application
-  community.general.pacman:
-    name: bat
+  ansible.builtin.package:
+    name: "{{ item }}"
     state: present
-  become: true
+  loop: "{{ package_list }}"
 
 - name: Batcat | Create config folder
   ansible.builtin.file:
@@ -46,11 +33,11 @@
     state: link
     force: true
 
-- name: Install yazi, the terminal file manager
-  community.general.pacman:
-    name: yazi
-    state: present
-  become: true
+# - name: Install yazi, the terminal file manager
+#   community.general.pacman:
+#     name: yazi
+#     state: present
+#   become: true
 
 - name: Install zsh and dependencies for omz
   ansible.builtin.package:
