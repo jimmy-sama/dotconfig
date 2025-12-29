@@ -24,6 +24,11 @@ package_list: [
   lsd,
   ncdu,
   # tldr,
-  zoxide
+  ranger,
+  zoxide,
+  zsh,
+  fzf,
+  git,
+  curl,
 ]
 

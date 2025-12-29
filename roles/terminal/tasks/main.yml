@@ -1,53 +1,23 @@
 #SPDX-License-Identifier: MIT-0
 ---
-# tasks file for roles/terminal
-# - name: Install ghostty
-#   community.general.pacman:
-#     name: ghostty
-#     state: present
-#   become: true
-
-# - name: Copy ghostty config file
-#   ansible.builtin.file:
-#     src: "{{ role_path }}/files/ghostty/config"
-#     dest: "{{ ansible_user_dir }}/.config/ghostty/config"
-#     state: link
-#     force: true
-
-- name: Install newer CLI-Tools
+- name: Install CLI-Tools
   become: true
   ansible.builtin.package:
     name: "{{ item }}"
     state: present
   loop: "{{ package_list }}"
 
-- name: Batcat | Create config folder
-  ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/.config/bat"
-    state: directory
+- name: Find all config files
+  ansible.builtin.find:
+    paths: "{{ role_path }}/files/xdg_config/"
+    file_type: any
+  register: xdg_config
 
-- name: Batcat | Create symlink to role files directory
-  ansible.builtin.file:
-    src: "{{ role_path }}/files/bat/config"
-    dest: "{{ ansible_facts['user_dir'] }}/.config/bat/config"
-    state: link
-    force: true
-
-# - name: Install yazi, the terminal file manager
-#   community.general.pacman:
-#     name: yazi
-#     state: present
-#   become: true
-
-- name: Install zsh and dependencies for omz
-  ansible.builtin.package:
-    name: 
-      - zsh
-      - fzf
-      - git
-      - curl
-    state: present
-  become: true
+- name: Copy configuration files
+  ansible.builtin.copy:
+    src: "{{ item.path }}"
+    dest: "{{ ansible_facts['user_dir'] }}/.config/"
+  loop: "{{ xdg_config.files }}"
 
 - name: Change default shell to zsh
   ansible.builtin.user:
