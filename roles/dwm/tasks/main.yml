@@ -3,7 +3,7 @@
 # tasks file for roles/slstatus
 - name: Include the appropriate OS vars file
   include_vars:
-    file: "vars/{{ ansible_distribution }}.yml"
+    file: "vars/{{ ansible_facts['ansible_distribution'] }}.yml"
 
 - name: Install dependencies
   become: true
