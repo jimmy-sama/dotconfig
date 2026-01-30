@@ -68,11 +68,3 @@
   ansible.builtin.file:
     path: "{{ ansible_facts['user_dir'] }}/.config/picom"
     state: directory
-
-- name: Copy ghostty config file
-  ansible.builtin.file:
-    src: "{{ role_path }}/files/picom/picom.conf"
-    dest: "{{ ansible_facts['user_dir'] }}/.config/picom/picom.conf"
-    state: link
-    force: true
-  when: "{{ ansible_facts['ansible_os_family'] }}" == "Archlinux"

@@ -2,9 +2,8 @@
 os_packages: 
   - bat
   - duf
-  - fd
+  - fd-find
   - jq
-  # - fx
   - glow
   - lsd
   - ncdu

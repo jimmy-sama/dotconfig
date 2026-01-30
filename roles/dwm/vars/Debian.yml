@@ -11,6 +11,5 @@ os_packages:
   - brightnessctl
   - flameshot
   - gimp
-  - kitty
   - picom
   - imagemagick

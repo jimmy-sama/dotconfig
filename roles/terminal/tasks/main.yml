@@ -1,14 +1,18 @@
 #SPDX-License-Identifier: MIT-0
 ---
 - name: Include the appropriate OS vars file
-  ansible.builtint.include_vars:
-    file: "vars/{{ ansible_facts['ansible_os_family'] }}.yml"
+  ansible.builtin.include_vars:
+    file: "vars/{{ ansible_facts['os_family'] }}.yml"
 
 - name: Install CLI-Tools
   become: true
   ansible.builtin.package:
     name: "{{ os_packages }}"
     state: present
+
+- name: Install packages that are missing in the debian repo
+  ansible.builtin.include_tasks: "Debian.yml"
+  when: ansible_facts['os_family'] == "Debian"
 
 - name: Find all config files
   ansible.builtin.find:

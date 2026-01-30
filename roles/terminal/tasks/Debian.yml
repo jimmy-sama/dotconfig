@@ -1,0 +1,14 @@
+---
+- name: Install fx
+  become: true
+  ansible.builtin.shell: curl https://fx.wtf/install.sh | sh
+
+- name: Install pipx as requirement for installing tldr
+  ansible.builtin.package:
+    name:
+      - pipx
+
+- name: Install tldr using pipx
+  community.general.pipx:
+    name: tldr
+    state: latest
