@@ -3,7 +3,7 @@
 # tasks file for roles/slstatus
 - name: Include the appropriate OS vars file
   include_vars:
-    file: "vars/{{ ansible_facts['ansible_distribution'] }}.yml"
+    file: "vars/{{ ansible_facts['ansible_os_family'] }}.yml"
 
 - name: Install dependencies
   become: true
@@ -75,10 +75,4 @@
     dest: "{{ ansible_facts['user_dir'] }}/.config/picom/picom.conf"
     state: link
     force: true
-
-- name: Copy the i3lock script
-  ansible.builtin.file:
-    src: "{{ role_path }}/files/.i3lock.sh"
-    dest: "{{ ansible_facts['user_dir'] }}/.i3lock.sh"
-    mode: 0744
-    state: link
+  when: "{{ ansible_facts['ansible_os_family'] }}" == "Archlinux"
