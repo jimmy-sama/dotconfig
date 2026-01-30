@@ -4,8 +4,6 @@ alias vi='nvim'
 alias dot='cd ~/workspace/git/hub/dotconfig/'
 alias ndot='cd ~/workspace/git/hub/dotconfig/roles/neovim/files/'
 
-alias cat='bat'
-
 # Alias's to modified commands
 alias mkdir='mkdir -p'
 alias ping='ping -c 10'
