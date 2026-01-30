@@ -15,20 +15,3 @@ ZSH_CUSTOM_PLUGINS: {
   "zsh-fzf-history-search": "https://github.com/joshskidmore/zsh-fzf-history-search",
 }
 
-package_list: [
-  bat,
-  duf,
-  # fd,
-  # fx,
-  glow,
-  lsd,
-  ncdu,
-  # tldr,
-  ranger,
-  zoxide,
-  zsh,
-  fzf,
-  git,
-  curl,
-]
-

@@ -1,0 +1,16 @@
+---
+os_packages: 
+  - bat
+  - duf
+  - fd
+  - jq
+  # - fx
+  - glow
+  - lsd
+  - ncdu
+  - ranger
+  - zoxide
+  - zsh
+  - fzf
+  - git
+  - curl

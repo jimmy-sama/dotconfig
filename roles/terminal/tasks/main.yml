@@ -1,11 +1,14 @@
 #SPDX-License-Identifier: MIT-0
 ---
+- name: Include the appropriate OS vars file
+  ansible.builtint.include_vars:
+    file: "vars/{{ ansible_facts['ansible_os_family'] }}.yml"
+
 - name: Install CLI-Tools
   become: true
   ansible.builtin.package:
-    name: "{{ item }}"
+    name: "{{ os_packages }}"
     state: present
-  loop: "{{ package_list }}"
 
 - name: Find all config files
   ansible.builtin.find:
