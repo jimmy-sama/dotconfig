@@ -1,0 +1,16 @@
+---
+os_packages:
+  - xorg
+  - libx11
+  - libxft
+  - libxinerama
+  - polkit
+  - mate-polkit
+  - feh
+  - wireplumber
+  - brightnessctl
+  - flameshot
+  - gimp
+  - ghostty
+  - picom
+  - imagemagick

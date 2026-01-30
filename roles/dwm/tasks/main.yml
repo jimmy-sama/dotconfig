@@ -1,23 +1,14 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # tasks file for roles/slstatus
+- name: Include the appropriate OS vars file
+  include_vars:
+    file: "vars/{{ ansible_distribution }}.yml"
 
 - name: Install dependencies
   become: true
   ansible.builtin.package:
-    name:
-      - xorg
-      - polkit
-      - mate-polkit
-      - feh
-      - wireplumber
-      - brightnessctl
-      - i3lock
-      - flameshot
-      - gimp
-      - ghostty
-      - picom
-      - imagemagick
+    name: "{{ os_packages }}"
     state: present
 
 - name: Create the Wallpaper directory
