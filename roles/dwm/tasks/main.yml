@@ -58,13 +58,16 @@
   become: true
   when: slstatus_template.changed
 
-- name: Copy .xinitrc 
-  ansible.builtin.copy:
-    src: files/.xinitrc
+- name: Use the template xinitrc configuration file
+  template:
+    src: templates/xinitrc.j2
     dest: "{{ ansible_facts['user_dir'] }}/.xinitrc"
     mode: 0755
+    owner: "{{ ansible_facts['user_id'] }}"
+    group: "{{ ansible_facts['user_id'] }}"
+    force: true
 
-- name: Create the picom directory
-  ansible.builtin.file:
-    path: "{{ ansible_facts['user_dir'] }}/.config/picom"
-    state: directory
+- name: Copy picom config files
+  ansible.builtin.copy:
+    src: files/picom/
+    dest: "{{ ansible_facts['user_dir'] }}/.config/picom"
