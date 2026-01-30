@@ -4,6 +4,7 @@
   ansible.builtin.shell: curl https://fx.wtf/install.sh | sh
 
 - name: Install pipx as requirement for installing tldr
+  become: true
   ansible.builtin.package:
     name:
       - pipx
