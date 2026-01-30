@@ -5,6 +5,14 @@
     name: neovim
     state: absent
 
+- name: "Install appropriate build dependencies"
+  vars:
+    os_family_playbooks:
+      Debian: debian.yml
+      RedHat: redhat.yml
+      Archlinux: archlinux.yml
+  ansible.builtin.include_tasks: "{{ os_family_playbooks[ansible_facts['os_family']] }}" 
+
 - name: Ensure python-requests is installed
   ansible.builtin.pip:
     name: requests
@@ -18,15 +26,6 @@
     executable: /tmp/.venv/bin/python
   register: need_upgrade
   changed_when: need_upgrade.stdout | trim == 'needUpgrade' 
-
-
-- name: "Install appropriate build dependencies"
-  vars:
-    os_family_playbooks:
-      Debian: debian.yml
-      RedHat: redhat.yml
-      Archlinux: archlinux.yml
-  ansible.builtin.include_tasks: "{{ os_family_playbooks[ansible_facts['os_family']] }}" 
 
 - name: Build from source if there is a new stable version
   block:
