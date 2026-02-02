@@ -1,6 +1,6 @@
 ansible.cfg
 
-*/lazy-lock.json
+roles/neovim/files/lazy-lock.json
 
 */config.def.h.orig
 */config.def.h.rej
