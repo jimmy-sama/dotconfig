@@ -6,7 +6,6 @@ EXPORT_OMZ_DIR: ZSH=$HOME/.config/omz
 OMZ_CUSTOM: $HOME/.config/omz/custom
 
 ZSH_CUSTOM_FILES: {
-  "alias.zsh": "{{ role_path }}/files/zsh/alias.zsh",
   "functions.zsh": "{{ role_path }}/files/zsh/functions.zsh",
 }
 

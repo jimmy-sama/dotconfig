@@ -46,3 +46,10 @@ alias clickpaste='sleep 3; xdotool type "$(xclip -o -selection clipboard)"'
 
 alias poweroff='systemctl poweroff'
 alias reboot='systemctl reboot'
+
+# variable command callouts on different distros
+{% if  ansible_facts['os_family'] == "Archlinux" %}
+alias cat='bat'
+{% elif  ansible_facts['os_family'] == "Debian" %}
+alias cat="batcat"
+{% endif %}

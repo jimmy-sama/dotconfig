@@ -81,10 +81,4 @@ export ARCHFLAGS="-arch $(uname -m)"
 # users are encouraged to define aliases within a top-level file in
 # the $ZSH_CUSTOM folder, with .zsh extension.
 
-{% if  ansible_facts['os_family'] == "Archlinux" %}
-alias cat='bat'
-{% elif  ansible_facts['os_family'] == "Debian" %}
-alias cat="batcat"
-{% endif %}
-
 eval "$(zoxide init zsh)"
