@@ -11,6 +11,9 @@ vim.opt.signcolumn = "yes:1"
 
 local set = vim.keymap.set
 
+-- Escape the Terminal Mode with two taps on the esc key
+set("t", "<esc><esc>", "<c-\\><c-n>")
+
 set("n", "<space><space>x", "<cmd>source %<CR>")
 set("n", "<space>x", ":.lua<CR>")
 set("v", "<space>x", ":lua<CR>")
