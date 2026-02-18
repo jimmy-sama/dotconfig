@@ -29,7 +29,6 @@
     ansible.builtin.unarchive:
       src: "{{ dl_result.dest }}"
       dest: "{{ lua_ls_install_dir }}"
-      creates: "{{ lua_ls_install_dir }}/bin/lua-language-server"
 
   - name: Symlink binary into /usr/local/bin
     become: true
