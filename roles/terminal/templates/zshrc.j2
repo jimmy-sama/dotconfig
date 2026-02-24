@@ -1,5 +1,7 @@
 {% if  ansible_facts['virtualization_type'] == "wsl" %}
 eval "$(/usr/sbin/wsl2-ssh-agent)"
+{% elif ansible_facts['os_family'] == "Debian" %}
+eval "$(/usr/bin/ssh-agent)"
 {% else %}
 eval "$(/usr/sbin/ssh-agent)"
 {% endif %}
