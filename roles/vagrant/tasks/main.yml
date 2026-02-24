@@ -11,6 +11,17 @@
     components: contrib
     architectures: amd64
     signed_by: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+
+- name: Add the hashicorp repo for the latest version of vagrant (needed for newer virtualbox installations)
+  become: true
+  ansible.builtin.deb822_repository:
+    name: hashicorp
+    types: deb
+    uris: https://apt.releases.hashicorp.com
+    suites: "{{ ansible_facts['distribution_release'] }}"
+    components: main
+    architectures: amd64
+    signed_by: https://apt.releases.hashicorp.com/gpg
     
 - name: Install required programs for local Ansible development
   become: true
