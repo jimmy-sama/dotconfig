@@ -1,13 +1,16 @@
 ansible.cfg
 
+# Why does the wildcard path is not working??? (*/lazy-lock.json)
 roles/neovim/files/lazy-lock.json
 
 */config.def.h.orig
 */config.def.h.rej
 */dwm.c.orig
 */dwm.c.rej
-*/dwm/dwm
-*/slstatus/slstatus
+*/dwm
+*/slstatus
+*/slock
+*/st
 
 # Prerequisites
 *.d
