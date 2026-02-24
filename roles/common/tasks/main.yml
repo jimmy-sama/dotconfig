@@ -4,12 +4,12 @@
 - name: Install needed programs
   ansible.builtin.package:
     name:
-      - polkit
-      - openssh
+      - polkitd
+      - openssh-client
       - btop
       - man-db
       - which
-      - fd
+      - fd-find
       - lsd
     state: present
   become: true

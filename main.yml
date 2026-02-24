@@ -19,5 +19,4 @@
         - dwm
         - firefox
       when:
-        - ansible_facts['form_factor'] == Desktop
-        - ansible_facts['form_factor'] == Notebook
+        - ansible_facts['form_factor'] == "Desktop" or ansible_facts['form_factor'] == "Notebook"
