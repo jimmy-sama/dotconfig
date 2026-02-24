@@ -1,0 +1,24 @@
+#SPDX-License-Identifier: MIT-0
+---
+# By the time of creating this role, it is only intended to use with debian!
+- name: Add the virtualbox repo and trust the signing key
+  become: true
+  ansible.builtin.deb822_repository:
+    name: oracle_virtualbox
+    types: deb
+    uris: https://download.virtualbox.org/virtualbox/debian
+    suites: "{{ ansible_facts['distribution_release'] }}"
+    components: contrib
+    architectures: amd64
+    signed_by: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+    
+- name: Install required programs for local Ansible development
+  become: true
+  ansible.builtin.apt:
+    name:
+      - virtualbox-7.2
+      - vagrant
+      - ansible-core
+    update_cache: true
+    state: present
+

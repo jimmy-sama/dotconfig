@@ -9,4 +9,5 @@
     - { role: 'ly', tags: 'ly' }
     - { role: 'neovim', tags: 'neovim' }
     - { role: 'terminal', tags: 'terminal' }
+    - { role: 'vagrant', tags: 'vagrant' }
 
