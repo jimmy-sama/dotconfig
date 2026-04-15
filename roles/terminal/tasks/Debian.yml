@@ -1,4 +1,14 @@
 ---
+- name: Get the location of the fd-find executable
+  ansible.builtin.shell: which fdfind
+  register: fdfind_path
+
+- name: "Map fd-find executable to the .local/bin path"
+  ansible.builtin.file:
+    src: "{{ fdfind_path['stdout'] }}"
+    dest: ~/.local/bin/fd
+    state: link
+
 - name: Install fx
   become: true
   ansible.builtin.shell: curl https://fx.wtf/install.sh | sh

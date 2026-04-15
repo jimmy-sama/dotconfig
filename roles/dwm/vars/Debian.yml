@@ -1,15 +1,16 @@
 ---
 os_packages:
-  - xorg
+  - brightnessctl
+  - feh
+  - flameshot
+  - gimp
+  - imagemagick
+  - kitty
   - libx11-dev
   - libxft-dev
   - libxinerama-dev
-  - polkitd
   - mate-polkit
-  - feh
-  - wireplumber
-  - brightnessctl
-  - flameshot
-  - gimp
   - picom
-  - imagemagick
+  - polkitd
+  - wireplumber
+  - xorg

@@ -1,15 +1,15 @@
 ---
 os_packages: 
   - bat
+  - curl
   - duf
   - fd-find
-  - jq
+  - fzf
+  - git
   - glow
+  - jq
   - lsd
   - ncdu
   - ranger
   - zoxide
   - zsh
-  - fzf
-  - git
-  - curl

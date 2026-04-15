@@ -22,6 +22,7 @@ export PATH=$PATH:$HOME/.cargo/bin
 export ZSH="$HOME/.config/omz"
 export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST
 
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -54,7 +55,12 @@ HIST_STAMPS="mm/dd/yyyy"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+    {% if ansible_facts['os_family'] == "Archlinux" %}
     archlinux
+    {% elif ansible_facts['os_family'] == "Debian" %}
+    debian
+    {% endif %}
+
     cp
     git
     history
