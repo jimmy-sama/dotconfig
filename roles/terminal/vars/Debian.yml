@@ -8,6 +8,7 @@ os_packages:
   - git
   - glow
   - jq
+  - lazygit
   - lsd
   - ncdu
   - ranger
