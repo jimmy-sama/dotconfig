@@ -1,12 +1,17 @@
 ---
+- name: Ensure local bin path exists
+  ansible.builtin.file:
+    path: "{{ local_bin_path }}"
+    state: directory
+
 - name: Get the location of the fd-find executable
   ansible.builtin.shell: which fdfind
   register: fdfind_path
 
-- name: "Map fd-find executable to the .local/bin path"
+- name: Map fd-find executable to the local bin path
   ansible.builtin.file:
     src: "{{ fdfind_path['stdout'] }}"
-    dest: ~/.local/bin/fd
+    dest: "{{ local_bin_path }}/fd"
     state: link
 
 - name: Install fx
@@ -15,9 +20,9 @@
 
 - name: Install pipx as requirement for installing tldr
   become: true
-  ansible.builtin.package:
-    name:
-      - pipx
+  ansible.builtin.apt:
+    name: pipx
+    state: present
 
 - name: Install tldr using pipx
   community.general.pipx:

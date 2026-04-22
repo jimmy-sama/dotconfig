@@ -131,7 +131,8 @@ startAnsible() {
 	fi
     fi
 
-    # ansible-playbook main.yml -K
+    cd $REPOLOCATION
+    ansible-playbook main.yml -K
 }
 
 checkPackageManager
