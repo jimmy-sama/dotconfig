@@ -1,18 +1,53 @@
 ---
-- name: "Install ly display manager"
+- name: Install ly display manager with pacman
+  become: true
   ansible.builtin.package:
     name: ly
     state: present
-  become: true
+  when: ansible_distribution == "Archlinux"
 
-- name: "Enable the ly systemd service"
+- name: Build ly from source on Debian
+  become: true
+  when: ansible_distribution == "Debian"
+  block:
+    - name: Install required packages
+      ansible.builtin.apt:
+        name: "{{ build_packages }}"
+        state: present
+
+    - name: Clone the ly repo
+      ansible.builtin.git:
+        repo: "{{ ly_repo_url }}"
+        dest: "{{ ly_repo_path }}"
+        update: true
+      register: clone_repo
+
+    - name: Create the directory for the zig binary
+      ansible.builtin.file:
+        path: "{{ zig_path }}"
+        state: directory
+
+    - name: Unarchive the zig binary
+      ansible.builtin.unarchive:
+        src: "{{ zig_archive_url }}"
+        dest: "{{ zig_path }}"
+        remote_src: true
+        extra_opts:
+          - '--strip-components=1'
+
+    - name: Build ly using zig
+      ansible.builtin.command: /opt/zig/zig build
+      args:
+        chdir: "{{ ly_repo_path }}"
+
+- name: Enable the ly systemd service
+  become: true
   ansible.builtin.systemd_service:
     name: ly@tty2
     enabled: true
-  become: true
 
-- name: "Disable the getty systemd service"
+- name: Disable the getty systemd service
+  become: true
   ansible.builtin.systemd_service:
     name: getty@tty2
     enabled: false
-  become: true
