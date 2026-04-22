@@ -1,5 +1,5 @@
 ---
-- name: Configure my Arch-System
+- name: Configure my Linux Workstation
   hosts: localhost
   connection: local
   tasks:

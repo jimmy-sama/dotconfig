@@ -39,13 +39,4 @@
       force: yes
       mode: "0755"
 
-  - name: Verify lua-language-server works
-    ansible.builtin.command: "{{ lua_ls_bin_path }} --version"
-    register: version_output
-    changed_when: false
-
-  - name: Show installed version
-    ansible.builtin.debug:
-      msg: "lua-language-server installed – version output: {{ version_output.stdout }}"
-
   when: lua_ls_method == "binary"

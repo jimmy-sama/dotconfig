@@ -1,4 +1,3 @@
-#SPDX-License-Identifier: MIT-0
 ---
 - name: Include the appropriate OS vars file
   ansible.builtin.include_vars:
@@ -22,9 +21,11 @@
 
 - name: Copy configuration files
   ansible.builtin.copy:
-    src: "{{ item.path }}"
+    src: "{{ config_file.path }}"
     dest: "{{ ansible_facts['user_dir'] }}/.config/"
   loop: "{{ xdg_config.files }}"
+  loop_control:
+    loop_var: config_file
 
 - name: Change default shell to zsh
   ansible.builtin.user:
@@ -35,18 +36,20 @@
 - name: Check if Oh my zsh exists
   ansible.builtin.stat:
     path: "{{ OMZ_DIR }}"
-  register: cloned
+  register: omz_path
 
 - name: Install oh-my-zsh in a custom directory
   ansible.builtin.shell:
     cmd: export "{{ EXPORT_OMZ_DIR }}" && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-  when: not cloned.stat.exists
+  when: not omz_path.stat.exists
 
 - name: Clone external plugins from defaults dictionary
   ansible.builtin.git:
-    repo: "{{ item.value }}"
-    dest: "{{ OMZ_CUSTOM }}/plugins/{{ item.key }}"
+    repo: "{{ omz_plugins.value }}"
+    dest: "{{ OMZ_CUSTOM }}/plugins/{{ omz_plugins.key }}"
   loop: "{{ ZSH_CUSTOM_PLUGINS | dict2items }}"
+  loop_control:
+    loop_var: omz_plugins
 
 - name: Use the template zshrc configuration file
   template:
@@ -69,9 +72,11 @@
 
 - name: Link custom files from defaults dictionary
   ansible.builtin.file:
-    src: "{{ item.value }}"
-    dest: "{{ OMZ_CUSTOM }}/{{ item.key }}"
+    src: "{{ custom_conf.value }}"
+    dest: "{{ OMZ_CUSTOM }}/{{ custom_conf.key }}"
     owner: "{{ ansible_facts['user_id'] }}"
     group: "{{ ansible_facts['user_id'] }}"
     state: link
   loop: "{{ ZSH_CUSTOM_FILES | dict2items }}"
+  loop_control:
+    loop_var: custom_conf

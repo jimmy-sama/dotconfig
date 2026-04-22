@@ -6,6 +6,7 @@
 
 - name: Get the location of the fd-find executable
   ansible.builtin.shell: which fdfind
+  changed_when: false
   register: fdfind_path
 
 - name: Map fd-find executable to the local bin path

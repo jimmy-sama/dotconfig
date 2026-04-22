@@ -1,12 +1,13 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # defaults file for roles/fonts
-FONTS_DIR: $HOME/.local/share/fonts
-NERD_FONTS_REPO: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0
+fonts_dir: $HOME/.local/share/fonts
+nerd_fonts_version: 3.4.0
+nerd_fonts_repo: "https://github.com/ryanoasis/nerd-fonts/releases/download/v{{ nerd_fonts_version }}"
 
-FONTS: {
-  "3270": "{{ NERD_FONTS_REPO }}/3270.zip",
-  "BigBlueTerm": "{{ NERD_FONTS_REPO }}/BigBlueTerminal.zip",
-  "FiraMono": "{{ NERD_FONTS_REPO }}/FiraMono.zip",
-  "IBMPlexMono": "{{ NERD_FONTS_REPO }}/IBMPlexMono.zip",
+fonts: {
+  "3270": "{{ nerd_fonts_repo }}/3270.zip",
+  "BigBlueTerm": "{{ nerd_fonts_repo }}/BigBlueTerminal.zip",
+  "FiraMono": "{{ nerd_fonts_repo }}/FiraMono.zip",
+  "IBMPlexMono": "{{ nerd_fonts_repo }}/IBMPlexMono.zip",
 }

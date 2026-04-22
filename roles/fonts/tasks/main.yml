@@ -1,6 +1,4 @@
-#SPDX-License-Identifier: MIT-0
 ---
-# tasks file for roles/fonts
 - name: Install Dependencies
   ansible.builtin.package:
     name:
@@ -8,7 +6,7 @@
       - unzip
   become: true
 
-- name: simple kanji support
+- name: Simple kanji support
   become: true
   block:
     - name: Ensure locales exists
@@ -25,18 +23,24 @@
         state: present
       when: ansible_distribution == "Archlinux"
 
-- name: create fonts directory
+- name: Create fonts directory
   ansible.builtin.file:
-    path: "{{ FONTS_DIR }}/{{ item.key }}"
+    path: "{{ fonts_dir }}/{{ font.key }}"
     state: directory
-  loop: "{{ FONTS | dict2items }}"
+  loop: "{{ fonts | dict2items }}"
+  loop_control:
+    loop_var: font
 
 - name: Download Fonts
   ansible.builtin.unarchive:
-    src: "{{ item.value }}"
-    dest: "{{ FONTS_DIR }}/{{ item.key }}"
-    remote_src: yes
-  loop: "{{ FONTS | dict2items }}"
+    src: "{{ font.value }}"
+    dest: "{{ fonts_dir }}/{{ font.key }}"
+    remote_src: true
+  loop: "{{ fonts | dict2items }}"
+  loop_control:
+    loop_var: font
+  register: download_fonts
 
 - name: Run fc-cache command
   ansible.builtin.command: fc-cache
+  when: download_fonts.changed
