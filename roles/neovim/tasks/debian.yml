@@ -4,7 +4,6 @@
   ansible.builtin.apt:
     name: "{{ debian_build_requirements }}"
     state: present
-  loop: "{{ debian_build_requirements }}"
 
 - name: Install Debian additional packages
   become: true
