@@ -2,16 +2,15 @@
 - name: Install Debian build dependencies.
   become: true
   ansible.builtin.apt:
-    name: "{{ item }}"
+    name: "{{ debian_build_requirements }}"
     state: present
   loop: "{{ debian_build_requirements }}"
 
 - name: Install Debian additional packages
   become: true
   ansible.builtin.apt:
-    name: "{{ item }}"
+    name: "{{ debian_additional_packages }}"
     state: present
-  loop: "{{ debian_additional_packages }}"
 
 - name: Install lua-language-server with the dedicated play
   ansible.builtin.include_tasks: "lua_ls.yml"
