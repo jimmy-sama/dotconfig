@@ -14,10 +14,6 @@
     dest: "{{ local_bin_path }}/fd"
     state: link
 
-- name: Install fx
-  become: true
-  ansible.builtin.shell: curl https://fx.wtf/install.sh | sh
-
 - name: Install pipx as requirement for installing tldr
   become: true
   ansible.builtin.apt:
@@ -28,3 +24,63 @@
   community.general.pipx:
     name: tldr
     state: latest
+    
+- name: Check if fx is installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/fx
+  register: fx_path
+
+- name: Install fx if it does not exist
+  become: true
+  ansible.builtin.shell: curl https://fx.wtf/install.sh | sh
+  when: not fx_path.stat.exists
+
+- name: Check if a Update is required and apply them
+  when: fx_path.stat.exists
+  block:
+    - name: Install the python3-ven package
+      become: true
+      ansible.builtin.apt:
+        name: python3-venv
+        state: present
+        update_cache: true
+
+    - name: Create the virtualenv directory in tmp
+      become: true
+      ansible.builtin.file:
+        path: "{{ github3py_venv_path }}"
+        state: directory
+        mode: "0755"
+
+    - name: Initialize the virtualenv
+      become: true
+      ansible.builtin.command:
+        cmd: "python3 -m venv {{ github3py_venv_path }}"
+        creates: "{{ github3py_venv_path }}/bin/activate"
+
+    - name: Install the github3 python library into a virtualenv
+      become: true
+      ansible.builtin.pip:
+        name: github3.py
+        state: present
+        virtualenv: "{{ github3py_venv_path }}"
+
+    - name: Get the newest fx release from github
+      community.general.github_release:
+        user: "{{ fx_gh_owner }}"
+        repo: "{{ fx_gh_repo }}"
+        action: latest_release
+      vars:
+        ansible_python_interpreter: "{{ venv_interpreter }}"
+      register: release_result
+
+    - name: Get the installed fx release version
+      ansible.builtin.shell: fx --version
+      register: fx_installed_version
+      changed_when: false
+
+    - name: Install the newest version of fx
+      become: true
+      ansible.builtin.shell: curl https://fx.wtf/install.sh | sh
+      when: fx_installed_version.stdout < release_result.tag
+

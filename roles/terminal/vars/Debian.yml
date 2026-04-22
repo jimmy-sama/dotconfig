@@ -16,3 +16,7 @@ os_packages:
   - zsh
 
 local_bin_path: "~/.local/bin"
+github3py_venv_path: "/opt/github3py_venv"
+venv_interpreter: "{{ github3py_venv_path }}/bin/python"
+fx_gh_owner: "antonmedv"
+fx_gh_repo: "fx"
