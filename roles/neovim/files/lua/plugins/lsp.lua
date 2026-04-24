@@ -1,4 +1,27 @@
 return {
+  -- Mason for managing LSPs, DAP, linters, and formatters.
+  {
+    'mason-org/mason.nvim',
+    config = function()
+      require('mason').setup()
+    end,
+  },
+  -- Bridge between Mason and lspconfig.
+  {
+    'mason-org/mason-lspconfig.nvim',
+    config = function()
+      require('mason-lspconfig').setup {
+        ensure_installed = {
+          'ansiblels',
+          'pyright',
+          'yamlls',
+          'lua_ls',
+          'bashls',
+          'clangd',
+        },
+      }
+    end,
+  },
   {
     "neovim/nvim-lspconfig",
     enabled = true,
@@ -18,19 +41,28 @@ return {
     },
     config = function()
       local capabilities = require('blink.cmp').get_lsp_capabilities()
-      vim.lsp.enable('lua_ls')
+
+      local servers = { 'ansiblels', 'pyright', 'yamlls', 'lua_ls', 'bashls', 'clangd' }
+      for _, lsp in ipairs(servers) do
+        vim.lsp.enable(lsp)
+        vim.lsp.config(lsp, {
+          capabilities = capabilities,
+        })
+      end
+
       vim.lsp.config('lua_ls', {
-        capabilities = capabilities,
         settings = {
           Lua = {
             diagnostics = { disable = { 'missing-fields' } },
           },
         },
       })
-      vim.lsp.enable('clangd')
-      vim.lsp.enable('pyright')
-      vim.lsp.enable('ansiblels')
-      vim.lsp.enable('bashls')
+
+      -- LSP Keymaps
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'LSP Hover' })
+      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'LSP Go to Definition' })
+      vim.keymap.set('n', 'gr', vim.lsp.buf.references, { desc = 'LSP Go to References' })
+      vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'LSP Code Action' })
 
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
