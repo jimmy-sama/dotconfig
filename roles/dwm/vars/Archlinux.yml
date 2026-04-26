@@ -1,6 +1,7 @@
 ---
 os_packages:
   - brightnessctl
+  - dmenu
   - feh
   - flameshot
   - gimp
@@ -14,3 +15,4 @@ os_packages:
   - polkit
   - wireplumber
   - xorg
+  - xorg-xinit
