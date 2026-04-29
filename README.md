@@ -9,3 +9,8 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/jimmy-sama/dotconfig/ref
 ```bash
 ansible-playbook example.yml --tags "terminal,neovim"
 ```
+
+## ToDo's
+- [ ] split up the roles so that they only serve one purpose
+- [ ] use defaults for all roles so that variables can be overwritten if needed
+- [ ] call the specific roles and handle "dependencies" inside a separate playbook

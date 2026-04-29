@@ -1,13 +1,21 @@
 ---
 - hosts: localhost
   connection: local
+
+  vars_files:
+    secrets.yml
+
   roles:
     - { role: 'common', tags: 'common' }
     - { role: 'dwm', tags: 'dwm' }
     - { role: 'firefox', tags: 'firefox' }
     - { role: 'fonts', tags: 'fonts' }
+    - { role: 'ghostty', tags: 'ghostty' }
     - { role: 'ly', tags: 'ly' }
+    - { role: 'mpd', tags: 'mpd' }
     - { role: 'neovim', tags: 'neovim' }
+    - { role: 'rmpc', tags: 'rmpc' }
     - { role: 'terminal', tags: 'terminal' }
+    - { role: 'tmux', tags: 'tmux' }
     - { role: 'vagrant', tags: 'vagrant' }
-
+    - { role: 'zsh', tags: 'zsh' }
