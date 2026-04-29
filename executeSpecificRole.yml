@@ -15,6 +15,7 @@
     - { role: 'ly', tags: 'ly' }
     - { role: 'mpd', tags: 'mpd' }
     - { role: 'neovim', tags: 'neovim' }
+    - { role: 'picom', tags: 'picom' }
     - { role: 'ranger', tags: 'ranger' }
     - { role: 'rmpc', tags: 'rmpc' }
     - { role: 'rofi', tags: 'rofi' }
