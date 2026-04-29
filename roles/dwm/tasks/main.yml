@@ -1,73 +1,32 @@
-#SPDX-License-Identifier: MIT-0
 ---
-# tasks file for roles/slstatus
-- name: Include the appropriate OS vars file
-  ansible.builtin.include_vars:
-    file: "vars/{{ ansible_facts['os_family'] }}.yml"
-
-- name: Install dependencies
+- name: Install the dwm build requirements and other requirements
   become: true
-  ansible.builtin.package:
-    name: "{{ os_packages }}"
+  community.general.pacman:
+    name: "{{ dwm_build_requirements }}"
+    state: present
+
+- name: Install other dwm dependencies
+  become: true
+  community.general.pacman:
+    name: "{{ dwm_dependencies }}"
     state: present
 
 - name: Create the Wallpaper directory
   ansible.builtin.file:
     path: ~/Pictures/Wallpaper
     state: directory
+    mode: '0755'
 
-- name: Copy Wallpapers
-  ansible.builtin.copy:
-    src: "{{ item }}"
-    dest: ~/Pictures/Wallpaper
-  with_fileglob:
-    - "files/wallpaper/*"
+# Instead of copying single files, it would be better to work with archives
 
-- name: Copy dwm source files
-  ansible.builtin.copy:
-    src: files/dwm/
-    dest: "{{ ansible_facts['user_dir'] }}/.config/dwm"
-  register: copy_dwm
-
-- name: Copy slstatus source files
-  ansible.builtin.copy:
-    src: files/slstatus/
-    dest: "{{ ansible_facts['user_dir'] }}/.config/slstatus"
-  register: copy_slstatus
-
-- name: Use the template slstatus configuration file
-  template:
-    src: templates/slstatusConfig.h.j2
-    dest: "{{ ansible_facts['user_dir'] }}/.config/slstatus/config.h"
-    mode: 0755
-    owner: "{{ ansible_facts['user_id'] }}"
-    group: "{{ ansible_facts['user_id'] }}"
-  register: slstatus_template
-
-- name: Run 'install' target as root on dwm
-  community.general.make:
-    chdir: "{{ ansible_facts['user_dir'] }}/.config/dwm"
-    target: install
-  become: true
-  when: copy_dwm.changed
-
-- name: Run 'install' target as root on slstatus
-  community.general.make:
-    chdir: "{{ ansible_facts['user_dir'] }}/.config/slstatus"
-    target: install
-  become: true
-  when: slstatus_template.changed
+- name: Clone my custom version of dwm # noqa: latest[git]
+  ansible.builtin.git:
+    repo: "{{ dwm_ssl_repo }}"
+    dest: "{{ dwm_workspace_dir }}"
+  notify: Dwm_make
 
 - name: Use the template xinitrc configuration file
-  template:
+  ansible.builtin.template:
     src: templates/xinitrc.j2
-    dest: "{{ ansible_facts['user_dir'] }}/.xinitrc"
-    mode: 0755
-    owner: "{{ ansible_facts['user_id'] }}"
-    group: "{{ ansible_facts['user_id'] }}"
-    force: true
-
-- name: Copy picom config files
-  ansible.builtin.copy:
-    src: files/picom/
-    dest: "{{ ansible_facts['user_dir'] }}/.config/picom"
+    dest: ~/.xinitrc
+    mode: '0755'

@@ -1,0 +1,7 @@
+---
+# Run 'install' target as root on dwm
+- name: Dwm_make
+  become: true
+  community.general.make:
+    chdir: "{{ dwm_workspace_dir }}"
+    target: install

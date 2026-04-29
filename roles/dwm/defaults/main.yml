@@ -1,0 +1,22 @@
+---
+dwm_build_requirements:
+  - libx11
+  - libxft
+  - libxinerama
+  - xorg
+  - xorg-xinit
+
+dwm_dependencies:
+  - brightnessctl
+  - feh
+  - flameshot
+  - ghostty
+  - imagemagick
+  - mate-polkit
+  - picom
+  - polkit
+  - wireplumber
+
+dwm_https_repo: "https://github.com/jimmy-sama/dwm_custom.git"
+dwm_ssl_repo: "git@github.com:jimmy-sama/dwm_custom.git"
+dwm_workspace_dir: "{{ ansible_facts['user_dir'] }}/workspace/git/hub/dwm_custom"

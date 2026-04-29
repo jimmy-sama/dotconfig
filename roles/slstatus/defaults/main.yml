@@ -4,4 +4,6 @@ slstatus_build_requirements:
   - libxft
   - libxinerama
 
-slstatus_workspace_dir: "~/workspace/git/hub/slstatus_custom"
+slstatus_https_repo: "https://github.com/jimmy-sama/slstatus_custom.git"
+slstatus_ssl_repo: "git@github.com:jimmy-sama/slstatus_custom.git"
+slstatus_workspace_dir: "{{ ansible_facts['user_dir'] }}/workspace/git/hub/slstatus_custom"

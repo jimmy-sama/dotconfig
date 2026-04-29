@@ -11,16 +11,8 @@
     state: directory
     mode: '0755'
 
-- name: Copy slstatus source files
-  ansible.builtin.copy:
-    src: files/
+- name: Clone the custom slstatus repo # noqa: latest[git]
+  ansible.builtin.git:
+    repo: "{{ slstatus_ssl_repo }}"
     dest: "{{ slstatus_workspace_dir }}"
-    mode: '0755'
-  register: slstatus_copy
-
-- name: Use the template slstatus configuration file
-  ansible.builtin.template:
-    src: templates/slstatusConfig.h.j2
-    dest: ~/.config/slstatus/config.h
-    mode: '0755'
   notify: Slstatus_make

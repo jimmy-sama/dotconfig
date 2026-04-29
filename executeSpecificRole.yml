@@ -19,6 +19,7 @@
     - { role: 'ranger', tags: 'ranger' }
     - { role: 'rmpc', tags: 'rmpc' }
     - { role: 'rofi', tags: 'rofi' }
+    - { role: 'slstatus', tags: 'slstatus' }
     - { role: 'terminal', tags: 'terminal' }
     - { role: 'tmux', tags: 'tmux' }
     - { role: 'vagrant', tags: 'vagrant' }
