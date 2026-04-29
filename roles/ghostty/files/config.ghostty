@@ -1,0 +1,5 @@
+confirm-close-surface = false
+font-family = FiraMono Nerd Font
+font-size = 16
+theme = Gruvbox Dark
+window-decoration = false

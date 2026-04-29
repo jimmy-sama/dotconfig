@@ -1,0 +1,18 @@
+---
+- name: Install the required ghostty package
+  become: true
+  community.general.pacman:
+    name: ghostty
+    state: present
+
+- name: Create the Ghostty configuration directory
+  ansible.builtin.file:
+    path: "{{ ghostty_config_dir }}"
+    state: directory
+
+- name: Copy the Ghostty configuration directory
+  ansible.builtin.copy:
+    src: "files/{{ ghostty_config_file }}"
+    dest: "{{ ghostty_config_dir }}/{{ ghostty_config_file }}"
+
+
