@@ -1,0 +1,22 @@
+---
+- name: Install the zathura package
+  become: true
+  community.general.pacman:
+    name: zathura
+    state: present
+
+- name: Install the required dependencies
+  become: true
+  community.general.pacman:
+    name: "{{ zathura_dependencies }}"
+    state: present
+
+- name: Create the zathura configuration directory
+  ansible.builtin.file:
+    path: "{{ zathura_config_dir }}"
+    state: directory
+
+- name: Copy the zathura configuration
+  ansible.builtin.copy:
+    src: "files/{{ zathura_config_file }}"
+    dest: "{{ zathura_config_dir }}/{{ zathura_config_file }}"

@@ -1,0 +1,6 @@
+---
+zathura_config_dir: "~/.config/zathura"
+zathura_config_file: "zathurarc"
+
+zathura_dependencies:
+  - zathura-pdf-mupdf
