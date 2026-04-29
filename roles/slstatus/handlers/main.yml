@@ -1,0 +1,7 @@
+---
+# Run 'install' target as root on slstatus
+- name: Slstatus_make
+  become: true
+  community.general.make:
+    chdir: "{{ slstatus_workspace_dir }}"
+    target: install

@@ -1,0 +1,7 @@
+---
+slstatus_build_requirements:
+  - libx11
+  - libxft
+  - libxinerama
+
+slstatus_workspace_dir: "~/workspace/git/hub/slstatus_custom"

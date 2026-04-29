@@ -1,0 +1,26 @@
+---
+- name: Install the slstatus build requirements
+  become: true
+  community.general.pacman:
+    name: "{{ slstatus_build_requirements }}"
+    state: present
+
+- name: Ensure the slstatus directory exists
+  ansible.builtin.file:
+    path: "{{ slstatus_workspace_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Copy slstatus source files
+  ansible.builtin.copy:
+    src: files/
+    dest: "{{ slstatus_workspace_dir }}"
+    mode: '0755'
+  register: slstatus_copy
+
+- name: Use the template slstatus configuration file
+  ansible.builtin.template:
+    src: templates/slstatusConfig.h.j2
+    dest: ~/.config/slstatus/config.h
+    mode: '0755'
+  notify: Slstatus_make
