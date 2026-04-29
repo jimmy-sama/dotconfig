@@ -7,10 +7,6 @@ roles/neovim/files/lazy-lock.json
 */config.def.h.rej
 */dwm.c.orig
 */dwm.c.rej
-*/dwm
-*/slstatus
-*/slock
-*/st
 
 # Prerequisites
 *.d
