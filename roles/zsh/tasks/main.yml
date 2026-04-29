@@ -1,0 +1,57 @@
+---
+- name: Install the zsh package
+  become: true
+  community.general.pacman:
+    name: zsh
+    state: present
+
+- name: Install the essential cli tools
+  become: true
+  community.general.pacman:
+    name: "{{ essential_cli_packages }}"
+    state: present
+
+- name: Change default shell to zsh
+  become: true
+  ansible.builtin.user:
+    name: "{{ ansible_facts['user_id'] }}"
+    shell: /usr/bin/zsh
+
+- name: Check if Oh my zsh exists
+  ansible.builtin.stat:
+    path: "{{ zsh_omz_dir }}"
+  register: omz_path
+
+- name: Install oh-my-zsh in a custom directory
+  ansible.builtin.shell:
+    cmd: export "{{ zsh_export_omz_dir }}" && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+  when: not omz_path.stat.exists
+
+- name: Clone external plugins from defaults dictionary
+  ansible.builtin.git:
+    repo: "{{ omz_plugin.value }}"
+    dest: "{{ zsh_omz_custom }}/plugins/{{ omz_plugin.key }}"
+  loop: "{{ zsh_custom_plugins | dict2items }}"
+  loop_control:
+    loop_var: omz_plugin
+
+- name: Use the template zshrc configuration file
+  ansible.builtin.template:
+    src: templates/zshrc.j2
+    dest: ~/.zshrc
+    force: true
+  register: zshrc_template
+
+- name: Use the template alias configuration file
+  ansible.builtin.template:
+    src: templates/alias.j2
+    dest: "{{ zsh_omz_custom }}/alias.zsh"
+    force: true
+
+- name: Copy custom files from defaults dictionary
+  ansible.builtin.copy:
+    src: "{{ custom_conf.value }}"
+    dest: "{{ zsh_omz_custom }}/{{ custom_conf.key }}"
+  loop: "{{ zsh_custom_files | dict2items }}"
+  loop_control:
+    loop_var: custom_conf

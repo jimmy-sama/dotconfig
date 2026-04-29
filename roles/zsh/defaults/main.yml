@@ -1,0 +1,30 @@
+---
+zsh_omz_dir: "~/.config/omz"
+zsh_export_omz_dir: "ZSH={{ zsh_omz_dir }}"
+zsh_omz_custom: "{{ zsh_omz_dir }}/custom"
+
+zsh_custom_files: {
+  "functions.zsh": "files/functions.zsh",
+}
+
+zsh_custom_plugins: {
+  "zsh-syntax-highlighting": "https://github.com/zsh-users/zsh-syntax-highlighting.git",
+  "zsh-fzf-history-search": "https://github.com/joshskidmore/zsh-fzf-history-search",
+}
+
+essential_cli_packages:
+  - bat
+  - curl
+  - duf
+  - fd
+  - fx
+  - fzf
+  - git
+  - glow
+  - jq
+  - lazygit
+  - lsd
+  - ncdu
+  - ranger
+  - tldr
+  - zoxide
