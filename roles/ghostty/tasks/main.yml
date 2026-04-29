@@ -10,7 +10,7 @@
     path: "{{ ghostty_config_dir }}"
     state: directory
 
-- name: Copy the Ghostty configuration directory
+- name: Copy the Ghostty configuration
   ansible.builtin.copy:
     src: "files/{{ ghostty_config_file }}"
     dest: "{{ ghostty_config_dir }}/{{ ghostty_config_file }}"
