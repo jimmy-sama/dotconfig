@@ -1,0 +1,4 @@
+---
+rmpc_config_dir: "~/.config/rmpc"
+rmpc_config_file: "{{ rmpc_config_dir }}/config.ron"
+rmpc_themes_dir: "{{ rmpc_config_dir }}/themes"

@@ -1,0 +1,26 @@
+---
+- name: Install the rmpc package
+  become: true
+  community.general.pacman:
+    name: rmpc
+    state: present
+
+- name: Ensure the rmpc configuration directories exists
+  ansible.builtin.file:
+    path: "{{ rmpc_dir }}"
+    state: directory
+  loop:
+    - "{{ rmpc_config_dir }}"
+    - "{{ rmpc_themes_dir }}"
+  loop_control:
+    loop_var: rmpc_dir
+
+- name: Copy the rmpc configuration file
+  ansible.builtin.copy:
+    src: files/config.ron
+    dest: "{{ rmpc_config_file }}"
+
+- name: Copy the rmpc theme file
+  ansible.builtin.copy:
+    src: files/gruvbox.ron
+    dest: "{{ rmpc_themes_dir }}/gruvbox.ron"
