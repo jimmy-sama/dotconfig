@@ -30,6 +30,9 @@ archlinux_additional_packages:
   - ripgrep
   - fd
 
+  # mason requirements
+  - npm
+
 debian_build_requirements:
   # For building neovim from source
   - ninja-build
