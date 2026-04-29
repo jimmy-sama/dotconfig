@@ -14,8 +14,10 @@
     - { role: 'ly', tags: 'ly' }
     - { role: 'mpd', tags: 'mpd' }
     - { role: 'neovim', tags: 'neovim' }
+    - { role: 'ranger', tags: 'ranger' }
     - { role: 'rmpc', tags: 'rmpc' }
     - { role: 'terminal', tags: 'terminal' }
     - { role: 'tmux', tags: 'tmux' }
     - { role: 'vagrant', tags: 'vagrant' }
+    - { role: 'zathura', tags: 'zathura' }
     - { role: 'zsh', tags: 'zsh' }
