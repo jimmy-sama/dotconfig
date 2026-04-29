@@ -1,19 +1,12 @@
-# Recommended location for database
-db_file            "{{ mpd_database_file }}"
-
-# If running mpd using systemd, delete this line to log directly to systemd.
-log_file           "{{ mpd_logfile }}"
-
-# The music directory is by default the XDG directory, uncomment to amend and choose a different directory
-music_directory    "{{ mpd_music_directory }}"
-
-# Uncomment to refresh the database whenever files in the music_directory are changed
+db_file "{{ mpd_database_file }}"
+sticker_file "{{ mpd_stickers_file }}"
+log_file "{{ mpd_logfile }}"
+music_directory "{{ mpd_music_directory }}"
 auto_update "{{ mpd_auto_update }}"
-
 bind_to_address "{{ mpd_bind_address }}"
 restore_paused "{{ mpd_restore_paused }}"
 
 audio_output {
-        type            "{{ mpd_audio_output_type }}"
-        name            "{{ mpd_audio_output_name }}"
+        type "{{ mpd_audio_output_type }}"
+        name "{{ mpd_audio_output_name }}"
 }
