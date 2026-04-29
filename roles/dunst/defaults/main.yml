@@ -1,0 +1,3 @@
+---
+dunst_config_dir: "~/.config/dunst"
+dunst_config_file: "{{ dunst_config_dir }}/dunstrc"
