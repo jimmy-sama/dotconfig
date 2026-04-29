@@ -1,0 +1,18 @@
+---
+- name: Install the rofi package
+  become: true
+  community.general.pacman:
+    name: rofi
+    state: present
+
+- name: Ensure the rofi configuration directories exists
+  ansible.builtin.file:
+    path: "{{ rofi_config_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Copy the rofi configuration file
+  ansible.builtin.copy:
+    src: files/config.rasi
+    dest: "{{ rofi_config_file }}"
+    mode: '0644'

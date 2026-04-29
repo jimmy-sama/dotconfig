@@ -1,0 +1,3 @@
+---
+rofi_config_dir: "~/.config/rofi"
+rofi_config_file: "{{ rofi_config_dir }}/config.rasi"
