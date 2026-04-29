@@ -1,0 +1,24 @@
+---
+- name: Install the ranger package
+  become: true
+  community.general.pacman:
+    name: ranger
+    state: present
+
+- name: Install the required dependencies
+  become: true
+  community.general.pacman:
+    name: "{{ ranger_dependencies }}"
+    state: present
+
+- name: Create the ranger configuration directory
+  ansible.builtin.file:
+    path: "{{ ranger_config_dir }}"
+    state: directory
+
+- name: Copy the ranger configuration
+  ansible.builtin.copy:
+    src: "files/{{ ranger_config_file }}"
+    dest: "{{ ranger_config_dir }}/{{ ranger_config_file }}"
+
+

@@ -1,0 +1,6 @@
+---
+ranger_config_dir: "~/.config/ranger"
+ranger_config_file: "rc.conf"
+
+ranger_dependencies:
+  - ueberzugpp
