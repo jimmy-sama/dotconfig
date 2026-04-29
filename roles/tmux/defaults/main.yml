@@ -1,0 +1,4 @@
+---
+tmux_config_dir: "~/.config/tmux"
+tmux_config_file: "{{ tmux_config_dir }}/tmux.conf"
+tmux_tpm_dir: "{{ tmux_config_dir }}/plugins/tpm"

@@ -1,0 +1,32 @@
+---
+- name: Install the tmux packages
+  become: true
+  community.general.pacman:
+    name: tmux
+    state: present
+
+- name: Ensure the tmux configuration and tpm directory exists
+  ansible.builtin.file:
+    path: "{{ tmux_dir }}"
+    state: directory
+  loop:
+    - "{{ tmux_config_dir }}"
+    - "{{ tmux_tpm_dir }}"
+  loop_control:
+    loop_var: tmux_dir
+
+- name: Ensure git is installed
+  become: true
+  community.general.pacman:
+    name: git
+    state: present
+
+- name: Install the tmux plugin manager (tpm) using git
+  ansible.builtin.git:
+    repo: https://github.com/tmux-plugins/tpm.git
+    dest: "{{ tmux_tpm_dir }}"
+
+- name: Copy the tmux configuration
+  ansible.builtin.copy:
+    src: files/tmux.conf
+    dest: "{{ tmux_config_file }}"
