@@ -1,0 +1,18 @@
+---
+- name: Install the picom package
+  become: true
+  community.general.pacman:
+    name: picom
+    state: present
+
+- name: Ensure the picom configuration directories exists
+  ansible.builtin.file:
+    path: "{{ picom_config_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Copy the picom configuration file
+  ansible.builtin.copy:
+    src: files/picom.conf
+    dest: "{{ picom_config_file }}"
+    mode: '0644'

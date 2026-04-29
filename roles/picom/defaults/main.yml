@@ -1,0 +1,3 @@
+---
+picom_config_dir: "~/.config/picom"
+picom_config_file: "{{ picom_config_dir }}/picom.conf"
