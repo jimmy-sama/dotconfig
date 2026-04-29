@@ -1,0 +1,38 @@
+---
+- name: Ensure required directories exists
+  ansible.builtin.file:
+    path: "{{ required_dir }}"
+    state: directory
+  loop:
+    - "{{ mpd_root_dir }}"
+    - "{{ mpd_music_directory }}"
+    - "{{ mpd_config_dir }}"
+  loop_control:
+    loop_var: required_dir
+
+- name: Ensure required files exists
+  ansible.builtin.file:
+    path: "{{ required_file }}"
+    state: touch
+  loop:
+    - "{{ mpd_database_file }}"
+  loop_control:
+    loop_var: required_file
+
+- name: Copy the mpd configuration using the template
+  ansible.builtin.template:
+    src: templates/mpd.conf.j2
+    dest: "{{ mpd_config_dir }}/mpd.conf"
+
+- name: Install the required programs
+  become: true
+  community.general.pacman:
+    name: "{{ mpd_required_packages }}"
+    state: present
+
+- name: Enable the mpd service for the user
+  ansible.builtin.systemd_service:
+    name: mpd
+    state: started
+    enabled: true
+    scope: user

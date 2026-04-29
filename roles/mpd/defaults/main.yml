@@ -1,0 +1,15 @@
+---
+mpd_music_directory: "~/Music"
+mpd_config_dir: "~/.config/mpd"
+mpd_root_dir: "~/.mpd"
+mpd_database_file: "{{ mpd_root_dir }}/database"
+mpd_logfile: "syslog"
+mpd_auto_update: "yes"
+mpd_bind_address: "127.0.0.1"
+mpd_restore_paused: "yes"
+mpd_audio_output_type: "pipewire"
+mpd_audio_output_name: "Pipewire Output"
+
+mpd_required_packages:
+  - mpd
+  - mpc
