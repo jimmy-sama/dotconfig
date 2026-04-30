@@ -1,17 +1,14 @@
 ---
 - name: Remove existing neovim
-  become: true 
+  become: true
   ansible.builtin.package:
     name: neovim
     state: absent
 
 - name: "Install appropriate build dependencies"
-  vars:
-    os_family_playbooks:
-      Debian: debian.yml
-      RedHat: redhat.yml
-      Archlinux: archlinux.yml
-  ansible.builtin.include_tasks: "{{ os_family_playbooks[ansible_facts['os_family']] }}" 
+  community.general.pacman:
+    name: "{{ neovim_build_requirements }}"
+    state: present
 
 - name: Ensure python-requests is installed
   ansible.builtin.pip:
@@ -24,16 +21,17 @@
   ansible.builtin.script:
     cmd: library/need_neovim_upgrade.py
     executable: /tmp/.venv/bin/python
-  register: need_upgrade
-  changed_when: need_upgrade.stdout | trim == 'needUpgrade' 
+  register: neovim_upgrade
+  changed_when: neovim_upgrade.stdout | trim == 'needUpgrade'
 
 - name: Build from source if there is a new stable version
+  when: neovim_upgrade.stdout | trim == 'needUpgrade'
   block:
     - name: Clone the repo
       ansible.builtin.git:
         repo: "https://github.com/neovim/neovim"
         dest: /tmp/neovim
-        single_branch: yes
+        single_branch: true
         version: stable
 
     - name: Build neovim from stable source
@@ -44,22 +42,30 @@
         params:
           CMAKE_BUILD_TYPE: RelWithDebInfo
 
-    - name: remove dir
+    - name: Remove the cloned repo after build is complete
       become: true
       ansible.builtin.file:
         path: /tmp/neovim
         state: absent
-  when: need_upgrade.stdout | trim == 'needUpgrade' 
 
-- name: "Neovim | Config folder"
+- name: Ensure the neovim config and workspace dir exists
   ansible.builtin.file:
-    mode: "0755"
-    path: "{{ ansible_facts['user_dir'] }}/.config/nvim"
+    path: "{{ neovim_dir }}"
     state: directory
+    mode: '0755'
+  loop:
+    - "{{ neovim_config_dir }}"
+    - "{{ neovim_workspace_dir }}"
+  loop_control:
+    loop_var: neovim_dir
 
-- name: "Neovim | Create symlink to role files directory"
+- name: Clone my neovim config from github # noqa: latest[git]
+  ansible.builtin.git:
+    repo: "{{ neovim_ssl_repo }}"
+    dest: "{{ neovim_workspace_dir }}"
+
+- name: Link my neovim repo to the xdg config directory
   ansible.builtin.file:
-    src: "{{ role_path }}/files"
-    dest: "{{ ansible_facts['user_dir'] }}/.config/nvim"
+    src: "{{ neovim_workspace_dir }}"
+    dest: "{{ neovim_config_dir }}"
     state: link
-    force: true

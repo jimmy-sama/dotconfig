@@ -1,6 +1,5 @@
-#SPDX-License-Identifier: MIT-0
 ---
-archlinux_build_requirements:
+neovim_build_requirements:
   # For building neovim from source
   - base-devel
   - cmake
@@ -11,7 +10,7 @@ archlinux_build_requirements:
   - python
   - python-virtualenv
 
-archlinux_additional_packages:
+neovim_additional_packages:
   # lsp support
   - clang
   - pyright
@@ -33,41 +32,6 @@ archlinux_additional_packages:
   # mason requirements
   - npm
 
-debian_build_requirements:
-  # For building neovim from source
-  - ninja-build
-  - gettext
-  - cmake
-  - curl
-  - build-essential
-  - git
-
-  # For working with python
-  - python3-pip
-  - python3-virtualenv
-
-debian_additional_packages:
-  # lsp support
-  - clang
-  # pyright and bash-language-server get's installed using npm
-  # lua_ls has a play to install it
-
-  # for clipboard
-  - xclip
-
-  # treesitter requirements
-  - tree-sitter-cli
-  - nodejs
-
-  # telescope requirements
-  - fzf
-  - ripgrep
-  - fd-find
-
-# Lua Language Server variables
-lua_ls_method: binary
-lua_ls_version: "3.18.2"
-lua_ls_install_dir: /opt/lua_ls
-lua_ls_bin_path: /usr/local/bin/lua-language-server
-lua_ls_binary_url: https://github.com/LuaLS/lua-language-server/releases/download/{{ lua_ls_version }}/lua-language-server-{{ lua_ls_version }}-linux-x64.tar.gz
-
+neovim_config_dir: "{{ ~/.config/nvim }}"
+neovim_workspace_dir: "{{ ~/workspace/git/hub/neovim_config }}"
+neovim_ssl_repo: "git@github.com:jimmy-sama/neovim_config.git"
