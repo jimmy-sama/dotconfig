@@ -1,5 +1,5 @@
 ---
-os_packages: 
+terminal_packages: 
   - bat
   - curl
   - duf

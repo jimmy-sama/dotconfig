@@ -54,7 +54,6 @@
     state: directory
     mode: '0755'
   loop:
-    - "{{ neovim_config_dir }}"
     - "{{ neovim_workspace_dir }}"
   loop_control:
     loop_var: neovim_dir

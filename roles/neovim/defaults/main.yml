@@ -32,6 +32,6 @@ neovim_additional_packages:
   # mason requirements
   - npm
 
-neovim_config_dir: "{{ ~/.config/nvim }}"
-neovim_workspace_dir: "{{ ~/workspace/git/hub/neovim_config }}"
+neovim_config_dir: "~/.config/nvim"
+neovim_workspace_dir: "~/workspace/git/hub/neovim_config"
 neovim_ssl_repo: "git@github.com:jimmy-sama/neovim_config.git"
