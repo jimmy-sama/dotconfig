@@ -26,7 +26,7 @@
   notify: Dwm_make
 
 - name: Use the template xinitrc configuration file
-  ansible.builtin.template:
-    src: templates/xinitrc.j2
+  ansible.builtin.copy:
+    src: files/.xinitrc
     dest: ~/.xinitrc
     mode: '0755'
