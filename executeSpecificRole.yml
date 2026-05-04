@@ -2,8 +2,8 @@
 - hosts: localhost
   connection: local
 
-  # vars_files:
-  #   secrets.yml
+  vars_files:
+    secrets.yml
 
   roles:
     - { role: 'common', tags: 'common' }
