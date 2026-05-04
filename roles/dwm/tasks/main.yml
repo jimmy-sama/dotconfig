@@ -13,11 +13,14 @@
 
 - name: Create the Wallpaper directory
   ansible.builtin.file:
-    path: ~/Pictures/Wallpaper
+    path: "{{ dwm_wallpapers_dir }}"
     state: directory
     mode: '0755'
 
-# Instead of copying single files, it would be better to work with archives
+- name: Extrtact the wallpapaper archive
+  ansible.builtin.unarchive:
+    src: files/wallpapers.tar.bz2
+    dest: "{{ dwm_wallpapers_dir }}"
 
 - name: Clone my custom version of dwm # noqa: latest[git]
   ansible.builtin.git:

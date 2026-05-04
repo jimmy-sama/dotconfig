@@ -20,3 +20,4 @@ dwm_dependencies:
 dwm_https_repo: "https://github.com/jimmy-sama/dwm_custom.git"
 dwm_ssl_repo: "git@github.com:jimmy-sama/dwm_custom.git"
 dwm_workspace_dir: "{{ ansible_facts['user_dir'] }}/workspace/git/hub/dwm_custom"
+dwm_wallpapers_dir: "~/Pictures/Wallpapers"
