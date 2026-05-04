@@ -7,7 +7,7 @@ elif [ "$(xrandr | grep 'DP-3-3 connected 3440x1440')" != "" ]; then
 fi
 
 /usr/lib/mate-polkit/polkit-mate-authentication-agent-1&
-feh --no-fehbg --bg-fill ~/Pictures/Wallpaper/just_a_thought.jpg&
+feh --no-fehbg --bg-fill ~/Pictures/Wallpapers/Sen_to_Chihiro/forest.jpg&
 picom --daemon --config ~/.config/picom/picom.conf&
 dunst&
 slstatus&
