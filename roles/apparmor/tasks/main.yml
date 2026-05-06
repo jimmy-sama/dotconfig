@@ -1,0 +1,33 @@
+---
+- name: Install the required apparmor packages
+  become: true
+  community.general.pacman:
+    name: "{{ apparmor_packages }}"
+    state: present
+
+- name: Ensure the cmdline directory exists
+  become: true
+  ansible.builtin.file:
+    name: "{{ apparmor_cmdline_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Copy the kernel parameters
+  become: true
+  ansible.builtin.copy:
+    content: "{{ security_kernel_parameters }}"
+    dest: "{{ apparmor_cmdline_dir }}/security.conf"
+    mode: '0644'
+  notify: Regenerate_initramfs
+
+- name: Enable and start the apparmor and audit service
+  become: true
+  ansible.builtin.service:
+    name: "{{ service }}"
+    state: started
+    enabled: true
+  loop:
+    - apparmor
+    - auditd
+  loop_control:
+    loop_var: service

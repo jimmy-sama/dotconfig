@@ -1,0 +1,4 @@
+---
+- name: Regenerate_initramfs
+  become: true
+  ansible.builtin.command: mkinitcpio -p linux

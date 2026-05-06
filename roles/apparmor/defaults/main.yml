@@ -1,0 +1,6 @@
+---
+apparmor_packages:
+  - apparmor
+  - audit
+
+apparmor_cmdline_dir: "/etc/cmdline.d"
