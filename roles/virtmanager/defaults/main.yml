@@ -1,0 +1,11 @@
+---
+virtmanager_packages:
+  - virt-manager
+  - libvirt
+  - qemu-base
+  - dnsmasq
+
+virtmanager_libvirt_collection_requirements:
+  - python
+  - python-lxml
+  - libvirt-python

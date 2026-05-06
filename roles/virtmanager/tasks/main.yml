@@ -1,0 +1,47 @@
+---
+- name: Install the required virt-manager package plus all dependencies
+  become: true
+  community.general.pacman:
+    name: "{{ virtmanager_packages }}"
+    state: present
+
+- name: Add the user to the libvirt group
+  become: true
+  ansible.builtin.user:
+    name: "{{ ansible_facts['user_id'] }}"
+    groups: libvirt
+    append: true
+
+- name: Copy the firewalld zone config
+  become: true
+  ansible.builtin.copy:
+    src: files/libvirt.xml
+    dest: /etc/firewalld/zones/libvirt.xml
+    mode: '0644'
+  notify: Firewall_reload
+
+- name: Enable and start the libvirt daemon service
+  become: true
+  ansible.builtin.service:
+    name: libvirtd
+    state: started
+    enabled: true
+
+- name: Ensure libvirt collection requirements are installed
+  become: true
+  community.general.pacman:
+    name: "{{ virtmanager_libvirt_collection_requirements }}"
+    state: present
+
+# Autostart and start does not work in combination, so I have to split it.
+- name: Ensure the default network is autostarted
+  become: true
+  community.libvirt.virt_net:
+    name: default
+    autostart: true
+
+- name: Ensure the default network is started
+  become: true
+  community.libvirt.virt_net:
+    name: default
+    command: start
