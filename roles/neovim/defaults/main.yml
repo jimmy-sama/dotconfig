@@ -11,12 +11,6 @@ neovim_build_requirements:
   - python-virtualenv
 
 neovim_additional_packages:
-  # lsp support
-  - clang
-  - pyright
-  - lua-language-server
-  - bash-language-server
-
   # for clipboard
   - xclip
 
